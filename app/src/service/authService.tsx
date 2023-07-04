@@ -5,7 +5,7 @@ const baseUrl = 'https://api.realworld.io/api'
 
 export const registerUser = async (credentials: RegisterCredentials) => {
     try {
-        const res = await axios.post(`${baseUrl}/users`, credentials)
+        const res = await axios.post(`${baseUrl}/users`, { 'user': credentials})
         const { token } = res.data.user
         return token
     } catch (error) {
