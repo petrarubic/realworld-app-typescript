@@ -1,6 +1,6 @@
 import { useForm } from "react-hook-form"
 import { registerUser } from "../../service/authService"
-import { redirect } from "react-router"
+import { useNavigate } from 'react-router-dom'
 
 interface RegisterFormData {
     email: string
@@ -9,14 +9,16 @@ interface RegisterFormData {
 }
 
 function RegisterForm() {
+    const navigate = useNavigate()
     const { register, handleSubmit, formState: { errors }} = useForm<RegisterFormData>()
     const onSubmit = handleSubmit((data) => registerUser({
         email: data.email,
         username: data.username,
         password: data.password
     }).then((res) => {
-        if (res.token) {
-            redirect('/')
+        if (res) {
+            localStorage.setItem('userToken', JSON.stringify(res));
+            navigate('/')
         }
     }))
 
