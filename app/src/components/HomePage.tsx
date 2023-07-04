@@ -1,4 +1,4 @@
-function App() {
+function HomePage() {
   return (
     <>
       <h1 className="text-3xl font-bold underline">
@@ -7,5 +7,5 @@ function App() {
     </>
   )
 }
-
-export default App
+  
+  export default HomePage
