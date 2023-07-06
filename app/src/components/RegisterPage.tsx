@@ -1,5 +1,5 @@
-import { Link } from 'react-router-dom';
-import RegisterForm from './forms/RegisterForm';
+import { Link } from 'react-router-dom'
+import RegisterForm from './forms/RegisterForm'
 
 function RegisterPage() {
   return (
@@ -25,7 +25,7 @@ function RegisterPage() {
         </p>
       </div>
     </div>
-  );
+  )
 }
 
-export default RegisterPage;
+export default RegisterPage

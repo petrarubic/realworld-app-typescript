@@ -1,11 +1,11 @@
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom'
 
 function Navbar() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const handleLogout = () => {
-    localStorage.removeItem('userToken');
-    navigate('/login');
-  };
+    localStorage.removeItem('userToken')
+    navigate('/login')
+  }
   return (
     <nav className='flex items-center justify-between bg-white p-6'>
       <div className='text-xl font-bold text-indigo-600 flex flex-row justify-center space-x-1'>
@@ -48,7 +48,7 @@ function Navbar() {
         </div>
       </div>
     </nav>
-  );
+  )
 }
 
-export default Navbar;
+export default Navbar

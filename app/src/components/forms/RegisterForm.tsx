@@ -1,20 +1,20 @@
-import { useForm } from 'react-hook-form';
-import { registerUser } from '../../service/authService';
-import { useNavigate } from 'react-router-dom';
+import { useForm } from 'react-hook-form'
+import { registerUser } from '../../service/authService'
+import { useNavigate } from 'react-router-dom'
 
 interface RegisterFormData {
-  email: string;
-  username: string;
-  password: string;
+  email: string
+  username: string
+  password: string
 }
 
 function RegisterForm() {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<RegisterFormData>();
+  } = useForm<RegisterFormData>()
   const onSubmit = handleSubmit((data) =>
     registerUser({
       email: data.email,
@@ -22,11 +22,11 @@ function RegisterForm() {
       password: data.password,
     }).then((res) => {
       if (res) {
-        localStorage.setItem('userToken', JSON.stringify(res));
-        navigate('/');
+        localStorage.setItem('userToken', JSON.stringify(res))
+        navigate('/')
       }
     })
-  );
+  )
 
   return (
     <form className='space-y-6' onSubmit={onSubmit}>
@@ -93,7 +93,7 @@ function RegisterForm() {
         className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer'
       />
     </form>
-  );
+  )
 }
 
-export default RegisterForm;
+export default RegisterForm

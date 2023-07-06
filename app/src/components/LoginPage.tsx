@@ -1,4 +1,4 @@
-import LoginForm from './forms/LoginForm';
+import LoginForm from './forms/LoginForm'
 
 function LoginPage() {
   return (
@@ -14,7 +14,7 @@ function LoginPage() {
         </div>
       </div>
     </div>
-  );
+  )
 }
 
-export default LoginPage;
+export default LoginPage
