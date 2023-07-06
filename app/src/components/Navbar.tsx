@@ -7,7 +7,7 @@ function Navbar() {
     navigate('/login')
   }
   return (
-    <nav className='flex items-center justify-between bg-white p-6'>
+    <nav className='flex items-center justify-between bg-white p-6 sticky top-0 shadow-sm z-50'>
       <div className='text-xl font-bold text-indigo-600 flex flex-row justify-center space-x-1'>
         <span>RealWorld App</span>
         <svg
