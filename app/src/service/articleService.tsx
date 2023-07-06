@@ -4,9 +4,14 @@ import { Article } from '../types/Article'
 const baseUrl = 'https://api.realworld.io/api'
 
 // Retrieve a list of recent articles
-export const fetchArticles = async (): Promise<Article[]> => {
+export const fetchArticles = async (
+  limit: number,
+  offset: number
+): Promise<Article[]> => {
   try {
-    const res = await axios.get(`${baseUrl}/articles`)
+    const res = await axios.get(
+      `${baseUrl}/articles?limit=${limit}&offset=${offset}`
+    )
     return res.data.articles
   } catch (error) {
     if (axios.isAxiosError(error)) {
