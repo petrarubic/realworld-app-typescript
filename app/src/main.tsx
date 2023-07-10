@@ -8,7 +8,8 @@ import LoginPage from './components/LoginPage'
 import ProfilePage from './components/ProfilePage'
 import Navbar from './components/Navbar'
 import { QueryClient, QueryClientProvider } from 'react-query'
-import ArticlePage from './components/ArticlePage'
+import ArticleDetailsPage from './components/ArticleDetailsPage'
+import ArticleFormPage from './components/ArticleFormPage'
 
 const queryClient = new QueryClient()
 
@@ -40,11 +41,29 @@ const router = createBrowserRouter([
     ),
   },
   {
-    path: '/articles/:slug',
+    path: '/articles/:slug/edit',
     element: (
       <>
         <Navbar />
-        <ArticlePage />
+        <ArticleFormPage />
+      </>
+    ),
+  },
+  {
+    path: '/articles/new',
+    element: (
+      <>
+        <Navbar />
+        <ArticleFormPage />
+      </>
+    ),
+  },
+  {
+    path: '/articles/:slug/details',
+    element: (
+      <>
+        <Navbar />
+        <ArticleDetailsPage />
       </>
     ),
   },

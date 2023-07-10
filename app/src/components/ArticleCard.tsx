@@ -102,7 +102,7 @@ function ArticleCard({ article }: { article: Article }) {
               />
             </button>
             <Link
-              to=''
+              to={`/articles/${article.slug}/edit`}
               data-tooltip-id='edit-tooltip'
               data-tooltip-content='Edit'
             >
@@ -116,7 +116,7 @@ function ArticleCard({ article }: { article: Article }) {
             </button>
           </div>
           <Link
-            to={`/articles/${article.slug}`}
+            to={`/articles/${article.slug}/details`}
             data-tooltip-id='read-more-tooltip'
             data-tooltip-content='Read more'
           >

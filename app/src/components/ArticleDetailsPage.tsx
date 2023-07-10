@@ -5,11 +5,11 @@ import { fetchArticle } from '../service/articleService'
 import Spinner from './Spinner'
 import { formatDateString } from '../utils/utils'
 
-function ArticlePage() {
+function ArticleDetailsPage() {
   const { slug } = useParams()
 
   const { isLoading, isError, data, error } = useQuery<Article, Error>({
-    queryKey: ['articles', slug],
+    queryKey: ['article', slug],
     queryFn: () => fetchArticle(slug),
   })
 
@@ -49,4 +49,4 @@ function ArticlePage() {
   }
 }
 
-export default ArticlePage
+export default ArticleDetailsPage

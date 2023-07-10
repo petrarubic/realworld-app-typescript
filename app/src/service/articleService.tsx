@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { Article } from '../types/Article'
+import { ArticleFormData } from '../types/ArticleFormData'
 
 const baseUrl = 'https://api.realworld.io/api'
 
@@ -49,6 +50,61 @@ export const fetchArticle = async (
       return Promise.reject(new Error('Failed to fetch article'))
     }
     console.error('Fetch article error:', error)
+    return Promise.reject(error)
+  }
+}
+
+// Create new article
+export const createArticle = async (
+  data: ArticleFormData
+): Promise<Article> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+    const res = await axios.post(
+      `${baseUrl}/articles/`,
+      { article: data },
+      {
+        headers: {
+          Authorization: `Token ${authHeader}`,
+        },
+      }
+    )
+    return res.data.article
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios create article request error:', error)
+      return Promise.reject(new Error('Failed to create a new article'))
+    }
+    console.error('Create article error:', error)
+    return Promise.reject(error)
+  }
+}
+
+// Edit article details
+export const editArticle = async (
+  slug: string | undefined,
+  data: ArticleFormData
+): Promise<Article> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+    const res = await axios.put(
+      `${baseUrl}/articles/${slug}`,
+      { article: data },
+      {
+        headers: {
+          Authorization: `Token ${authHeader}`,
+        },
+      }
+    )
+    return res.data.article
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios edit article request error:', error)
+      return Promise.reject(new Error('Failed to edit current article'))
+    }
+    console.error('Edit article error:', error)
     return Promise.reject(error)
   }
 }
