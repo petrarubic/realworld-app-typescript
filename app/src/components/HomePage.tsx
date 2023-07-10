@@ -12,7 +12,7 @@ function HomePage() {
   const limit = 9
 
   const { isLoading, isError, data, error } = useQuery<Article[], Error>({
-    queryKey: ['article', currentPage],
+    queryKey: ['articles', currentPage],
     queryFn: () => fetchArticles(limit, (currentPage - 1) * limit),
   })
 

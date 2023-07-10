@@ -1,5 +1,6 @@
 import { Link } from 'react-router-dom'
-import { ArrowRightIcon, StarIcon } from '../icons'
+import { Tooltip } from 'react-tooltip'
+import { ArrowRightIcon, EditIcon, StarIcon, TrashIcon } from '../icons'
 import { Article } from '../types/Article'
 import { formatDateString } from '../utils/utils'
 import ArticleTag from './ArticleTag'
@@ -31,7 +32,7 @@ function ArticleCard({ article }: { article: Article }) {
   }
 
   return (
-    <div className='max-w-sm rounded overflow-hidden shadow-lg bg-white h-[280px]'>
+    <div className='max-w-sm rounded overflow-hidden shadow-lg bg-white'>
       <div className='bg-indigo-600 p-2'>
         <div className='text-sm flex justify-between items-center text-white'>
           <p className='font-semibold'>{article.author.username}</p>
@@ -48,20 +49,77 @@ function ArticleCard({ article }: { article: Article }) {
             <ArticleTag tag={t} key={index} />
           ))}
         </div>
-        <div className='flex justify-between items-center mt-4'>
-          <button
-            onClick={() => {
-              !favoriteArticle.favorited
-                ? handleAddToFavorites()
-                : handleRemoveFromFavorites()
+        <div>
+          <Tooltip
+            id='favorite-tooltip'
+            style={{
+              padding: '4px',
+              fontSize: '10px',
+              backgroundColor: '#4f46e5',
             }}
+          />
+          <Tooltip
+            id='edit-tooltip'
+            style={{
+              padding: '4px',
+              fontSize: '10px',
+              backgroundColor: '#4f46e5',
+            }}
+          />
+          <Tooltip
+            id='delete-tooltip'
+            style={{
+              padding: '4px',
+              fontSize: '10px',
+              backgroundColor: '#4f46e5',
+            }}
+          />
+          <Tooltip
+            id='read-more-tooltip'
+            style={{
+              padding: '4px',
+              fontSize: '10px',
+              backgroundColor: '#4f46e5',
+            }}
+          />
+        </div>
+        <div className='flex justify-between items-center mt-4'>
+          <div className='flex items-center space-x-1'>
+            <button
+              data-tooltip-id='favorite-tooltip'
+              data-tooltip-content={
+                !favoriteArticle.favorited ? 'Favorite' : 'Unfavorite'
+              }
+              onClick={() => {
+                !favoriteArticle.favorited
+                  ? handleAddToFavorites()
+                  : handleRemoveFromFavorites()
+              }}
+            >
+              <StarIcon
+                fillColor={!favoriteArticle.favorited ? '#ffffff' : '#4f46e5'}
+                strokeColor='#4f46e5'
+              />
+            </button>
+            <Link
+              to=''
+              data-tooltip-id='edit-tooltip'
+              data-tooltip-content='Edit'
+            >
+              <EditIcon />
+            </Link>
+            <button
+              data-tooltip-id='delete-tooltip'
+              data-tooltip-content='Delete'
+            >
+              <TrashIcon />
+            </button>
+          </div>
+          <Link
+            to={`/articles/${article.slug}`}
+            data-tooltip-id='read-more-tooltip'
+            data-tooltip-content='Read more'
           >
-            <StarIcon
-              fillColor={!favoriteArticle.favorited ? '#ffffff' : '#4f46e5'}
-              strokeColor='#4f46e5'
-            />
-          </button>
-          <Link to={`/articles/${article.slug}`}>
             <ArrowRightIcon />
           </Link>
         </div>

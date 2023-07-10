@@ -16,7 +16,8 @@
     "react-hook-form": "^7.45.1",
     "react-query": "^3.39.3",
     "react-router": "^6.14.1",
-    "react-router-dom": "^6.14.1"
+    "react-router-dom": "^6.14.1",
+    "react-tooltip": "^5.18.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.37",

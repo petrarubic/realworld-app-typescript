@@ -30,8 +30,33 @@ export const fetchArticles = async (
   }
 }
 
+// Retrieve single article details
+export const fetchArticle = async (
+  slug: string | undefined
+): Promise<Article> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+    const res = await axios.get(`${baseUrl}/articles/${slug}`, {
+      headers: {
+        Authorization: `Token ${authHeader}`,
+      },
+    })
+    return res.data.article
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios fetch article request error:', error)
+      return Promise.reject(new Error('Failed to fetch article'))
+    }
+    console.error('Fetch article error:', error)
+    return Promise.reject(error)
+  }
+}
+
 // Add selected article to the list of favorite articles
-export const addToFavoriteArticles = async (slug: string): Promise<Article> => {
+export const addToFavoriteArticles = async (
+  slug: string | undefined
+): Promise<Article> => {
   try {
     const token = localStorage.getItem('userToken')
     const authHeader = token?.replace(/^"(.*)"$/, '$1')
@@ -59,7 +84,7 @@ export const addToFavoriteArticles = async (slug: string): Promise<Article> => {
 
 // Remove selected article from the list of favorite articles
 export const removeFromFavoriteArticles = async (
-  slug: string
+  slug: string | undefined
 ): Promise<Article> => {
   try {
     const token = localStorage.getItem('userToken')
