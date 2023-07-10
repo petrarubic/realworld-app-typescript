@@ -61,9 +61,15 @@ export const createArticle = async (
   try {
     const token = localStorage.getItem('userToken')
     const authHeader = token?.replace(/^"(.*)"$/, '$1')
+    const tagListArray = data.tagList?.toString().trim().split(',')
     const res = await axios.post(
       `${baseUrl}/articles/`,
-      { article: data },
+      {
+        article: {
+          ...data,
+          tagList: tagListArray,
+        },
+      },
       {
         headers: {
           Authorization: `Token ${authHeader}`,

@@ -9,10 +9,12 @@ import {
   deleteArticle,
   removeFromFavoriteArticles,
 } from '../service/articleService'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { fetchCurrentUser } from '../service/authService'
 
 function ArticleCard({ article }: { article: Article }) {
   const [favoriteArticle, setFavoriteArticle] = useState(article)
+  const [showActionButtons, setShowActionButtons] = useState(false)
 
   const handleAddToFavorites = async () => {
     try {
@@ -35,10 +37,32 @@ function ArticleCard({ article }: { article: Article }) {
   const handleDelete = async () => {
     try {
       await deleteArticle(article.slug)
+      window.location.reload()
     } catch (error) {
       console.error('Error with deleting selected article', error)
     }
   }
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userData = await fetchCurrentUser()
+        if (
+          userData &&
+          article.author.username &&
+          userData.username === article.author.username
+        ) {
+          setShowActionButtons(true)
+        } else {
+          setShowActionButtons(false)
+        }
+      } catch (error) {
+        console.error('Failed to fetch current user:', error)
+      }
+    }
+
+    fetchUserData()
+  }, [article.author.username])
 
   return (
     <div className='max-w-sm rounded overflow-hidden shadow-lg bg-white'>
@@ -114,6 +138,7 @@ function ArticleCard({ article }: { article: Article }) {
               to={`/articles/${article.slug}/edit`}
               data-tooltip-id='edit-tooltip'
               data-tooltip-content='Edit'
+              className={showActionButtons ? '' : 'hidden'}
             >
               <EditIcon />
             </Link>
@@ -121,6 +146,7 @@ function ArticleCard({ article }: { article: Article }) {
               data-tooltip-id='delete-tooltip'
               data-tooltip-content='Delete'
               onClick={handleDelete}
+              className={showActionButtons ? '' : 'hidden'}
             >
               <TrashIcon />
             </button>

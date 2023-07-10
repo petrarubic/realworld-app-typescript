@@ -9,9 +9,12 @@ import {
   fetchArticle,
 } from '../service/articleService'
 import Spinner from './Spinner'
+import { useState } from 'react'
 
 function ArticleFormPage() {
   const { slug } = useParams()
+  const [isArticleEdited, setIsArticleEdited] = useState(false)
+  const [isArticleCreated, setIsArticleCreated] = useState(false)
 
   const { isLoading, isError, data, error } = useQuery<Article, Error>({
     queryKey: ['article', slug],
@@ -20,14 +23,14 @@ function ArticleFormPage() {
   })
 
   const handleCreateForm = (data: ArticleFormData) => {
-    createArticle(data).then((res) => {
-      console.log(res)
+    createArticle(data).then(() => {
+      setIsArticleCreated(true)
     })
   }
 
   const handleEditForm = (data: ArticleFormData) => {
-    editArticle(slug, data).then((res) => {
-      console.log(res)
+    editArticle(slug, data).then(() => {
+      setIsArticleEdited(false)
     })
   }
 
@@ -48,11 +51,27 @@ function ArticleFormPage() {
   }
 
   return (
-    <div className='flex min-h-full justify-center items-center px-6 py-12 lg:px-8 bg-gray-100'>
+    <div className='flex flex-col min-h-full justify-center items-center px-6 py-12 lg:px-8 bg-gray-100'>
       {slug ? (
-        <ArticleForm mode='edit' onSubmit={handleEditForm} initialData={data} />
+        <>
+          <ArticleForm
+            mode='edit'
+            onSubmit={handleEditForm}
+            initialData={data}
+          />
+          <br />
+          {isArticleEdited && (
+            <p className='font-bold'>Article edited successfully!</p>
+          )}
+        </>
       ) : (
-        <ArticleForm mode='create' onSubmit={handleCreateForm} />
+        <>
+          <ArticleForm mode='create' onSubmit={handleCreateForm} />
+          <br />
+          {isArticleCreated && (
+            <p className='font-bold'>Article created successfully!</p>
+          )}
+        </>
       )}
     </div>
   )

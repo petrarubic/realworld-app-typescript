@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { RegisterCredentials } from '../types/RegisterCredentials'
 import { LoginCredentials } from '../types/LoginCredentials'
+import { User } from '../types/User'
 
 const baseUrl = 'https://api.realworld.io/api'
 
@@ -35,5 +36,26 @@ export const loginUser = async (credentials: LoginCredentials) => {
     }
     console.error('Login user error:', error)
     return error
+  }
+}
+
+// Retrieve currently logged in user
+export const fetchCurrentUser = async (): Promise<User> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+    const res = await axios.get(`${baseUrl}/user`, {
+      headers: {
+        Authorization: `Token ${authHeader}`,
+      },
+    })
+    return res.data.user
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios fetch current user request error:', error)
+      return Promise.reject(new Error('Failed to fetch current user'))
+    }
+    console.error('Fetch current user error:', error)
+    return Promise.reject(error)
   }
 }
