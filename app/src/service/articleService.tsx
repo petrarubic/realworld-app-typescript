@@ -109,6 +109,28 @@ export const editArticle = async (
   }
 }
 
+// Delete article
+export const deleteArticle = async (
+  slug: string | undefined
+): Promise<void> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+    await axios.delete(`${baseUrl}/articles/${slug}`, {
+      headers: {
+        Authorization: `Token ${authHeader}`,
+      },
+    })
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios delete article request error:', error)
+      return Promise.reject(new Error('Failed to delete current article'))
+    }
+    console.error('Delete article error:', error)
+    return Promise.reject(error)
+  }
+}
+
 // Add selected article to the list of favorite articles
 export const addToFavoriteArticles = async (
   slug: string | undefined

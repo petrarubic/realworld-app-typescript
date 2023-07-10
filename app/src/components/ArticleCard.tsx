@@ -6,6 +6,7 @@ import { formatDateString } from '../utils/utils'
 import ArticleTag from './ArticleTag'
 import {
   addToFavoriteArticles,
+  deleteArticle,
   removeFromFavoriteArticles,
 } from '../service/articleService'
 import { useState } from 'react'
@@ -28,6 +29,14 @@ function ArticleCard({ article }: { article: Article }) {
       setFavoriteArticle(updatedArticle)
     } catch (error) {
       console.error('Error with adding selected article to favorites', error)
+    }
+  }
+
+  const handleDelete = async () => {
+    try {
+      await deleteArticle(article.slug)
+    } catch (error) {
+      console.error('Error with deleting selected article', error)
     }
   }
 
@@ -111,6 +120,7 @@ function ArticleCard({ article }: { article: Article }) {
             <button
               data-tooltip-id='delete-tooltip'
               data-tooltip-content='Delete'
+              onClick={handleDelete}
             >
               <TrashIcon />
             </button>
