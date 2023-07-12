@@ -1,14 +1,14 @@
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router'
-import ArticleForm from './forms/ArticleForm'
-import { ArticleFormData } from '../types/ArticleFormData'
-import { Article } from '../types/Article'
+import ArticleForm from '../forms/ArticleForm'
+import { ArticleFormData } from '../../types/ArticleFormData'
+import { Article } from '../../types/Article'
 import {
   createArticle,
   editArticle,
   fetchArticle,
-} from '../service/articleService'
-import Spinner from './Spinner'
+} from '../../service/articleService'
+import Spinner from '../Spinner'
 import { useState } from 'react'
 
 function ArticleFormPage() {
@@ -37,7 +37,7 @@ function ArticleFormPage() {
   const handleEditForm = (data: ArticleFormData) => {
     editArticle(slug, data)
       .then(() => {
-        setIsArticleEdited(false)
+        setIsArticleEdited(true)
       })
       .catch((error) => {
         setEditErrorMessage(error)

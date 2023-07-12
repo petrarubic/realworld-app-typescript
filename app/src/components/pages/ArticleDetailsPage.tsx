@@ -1,9 +1,9 @@
 import { useQuery } from 'react-query'
 import { useParams } from 'react-router'
-import { Article } from '../types/Article'
-import { fetchArticle } from '../service/articleService'
-import Spinner from './Spinner'
-import { formatDateString } from '../utils/utils'
+import { Article } from '../../types/Article'
+import { fetchArticle } from '../../service/articleService'
+import Spinner from '../Spinner'
+import { formatDateString } from '../../utils/utils'
 
 function ArticleDetailsPage() {
   const { slug } = useParams()

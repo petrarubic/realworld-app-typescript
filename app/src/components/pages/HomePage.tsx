@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from 'react-query'
 import { Link, useNavigate } from 'react-router-dom'
-import { fetchArticles } from '../service/articleService'
-import { Article } from '../types/Article'
-import ArticleCard from './ArticleCard'
-import Spinner from './Spinner'
+import { fetchArticles } from '../../service/articleService'
+import { Article } from '../../types/Article'
+import ArticleCard from '../ArticleCard'
+import Spinner from '../Spinner'
 
 function HomePage() {
   const navigate = useNavigate()

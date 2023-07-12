@@ -1,7 +1,5 @@
-export interface User {
+export interface ProfileFormData {
   email: string
-  password: string
-  token: string
   username: string
   bio: string | null
   image: string | null
