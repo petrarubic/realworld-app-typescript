@@ -29,7 +29,6 @@ function LoginForm() {
       })
       .catch((error) => {
         if (typeof error === 'object' && Object.keys(error).length > 0) {
-          console.log()
           if (
             error['email or password'] &&
             error['email or password'].length > 0

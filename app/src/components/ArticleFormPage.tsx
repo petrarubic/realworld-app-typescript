@@ -13,6 +13,8 @@ import { useState } from 'react'
 
 function ArticleFormPage() {
   const { slug } = useParams()
+  const [createErrorMessage, setCreateErrorMessage] = useState('')
+  const [editErrorMessage, setEditErrorMessage] = useState('')
   const [isArticleEdited, setIsArticleEdited] = useState(false)
   const [isArticleCreated, setIsArticleCreated] = useState(false)
 
@@ -23,15 +25,23 @@ function ArticleFormPage() {
   })
 
   const handleCreateForm = (data: ArticleFormData) => {
-    createArticle(data).then(() => {
-      setIsArticleCreated(true)
-    })
+    createArticle(data)
+      .then(() => {
+        setIsArticleCreated(true)
+      })
+      .catch((error) => {
+        setCreateErrorMessage(error)
+      })
   }
 
   const handleEditForm = (data: ArticleFormData) => {
-    editArticle(slug, data).then(() => {
-      setIsArticleEdited(false)
-    })
+    editArticle(slug, data)
+      .then(() => {
+        setIsArticleEdited(false)
+      })
+      .catch((error) => {
+        setEditErrorMessage(error)
+      })
   }
 
   if (isLoading) {
@@ -60,16 +70,20 @@ function ArticleFormPage() {
             initialData={data}
           />
           <br />
-          {isArticleEdited && (
+          {isArticleEdited && editErrorMessage === '' ? (
             <p className='font-bold'>Article edited successfully!</p>
+          ) : (
+            <p className='font-bold'>{editErrorMessage}</p>
           )}
         </>
       ) : (
         <>
           <ArticleForm mode='create' onSubmit={handleCreateForm} />
           <br />
-          {isArticleCreated && (
+          {isArticleCreated && createErrorMessage === '' ? (
             <p className='font-bold'>Article created successfully!</p>
+          ) : (
+            <p className='font-bold'>{createErrorMessage}</p>
           )}
         </>
       )}

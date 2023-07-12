@@ -15,13 +15,13 @@ export const registerUser = async (credentials: RegisterCredentials) => {
     if (axios.isAxiosError(error)) {
       console.error('Axios register user request error:', error)
       if (error.response) {
-        throw error.response.data.errors
+        return Promise.reject(error.response.data.errors)
       } else {
-        throw error
+        return Promise.reject(error)
       }
     }
     console.error('Register user error:', error)
-    throw error
+    return Promise.reject(error)
   }
 }
 
@@ -37,13 +37,13 @@ export const loginUser = async (credentials: LoginCredentials) => {
     if (axios.isAxiosError(error)) {
       console.error('Axios login user request error:', error)
       if (error.response) {
-        throw error.response.data.errors
+        return Promise.reject(error.response.data.errors)
       } else {
-        throw error
+        return Promise.reject(error)
       }
     }
     console.error('Login user error:', error)
-    throw error
+    return Promise.reject(error)
   }
 }
 
@@ -61,7 +61,7 @@ export const fetchCurrentUser = async (): Promise<User> => {
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios fetch current user request error:', error)
-      return Promise.reject(new Error('Failed to fetch current user'))
+      return Promise.reject('Failed to fetch current user')
     }
     console.error('Fetch current user error:', error)
     return Promise.reject(error)

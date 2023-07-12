@@ -80,7 +80,7 @@ export const createArticle = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios create article request error:', error)
-      return Promise.reject(new Error('Failed to create a new article'))
+      return Promise.reject('Failed to create a new article')
     }
     console.error('Create article error:', error)
     return Promise.reject(error)
@@ -108,7 +108,7 @@ export const editArticle = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios edit article request error:', error)
-      return Promise.reject(new Error('Failed to edit current article'))
+      return Promise.reject('Failed to edit current article')
     }
     console.error('Edit article error:', error)
     return Promise.reject(error)
@@ -130,7 +130,7 @@ export const deleteArticle = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios delete article request error:', error)
-      return Promise.reject(new Error('Failed to delete current article'))
+      return Promise.reject('Failed to delete current article')
     }
     console.error('Delete article error:', error)
     return Promise.reject(error)
@@ -157,9 +157,7 @@ export const addToFavoriteArticles = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios add to favorite articles request error:', error)
-      return Promise.reject(
-        new Error('Failed to add article to favorite articles')
-      )
+      return Promise.reject('Failed to add article to favorite articles')
     }
     console.error('Add to favorite articles error:', error)
     return Promise.reject(error)
@@ -184,9 +182,7 @@ export const removeFromFavoriteArticles = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios remove from favorite articles request error:', error)
-      return Promise.reject(
-        new Error('Failed to remove article from favorite articles')
-      )
+      return Promise.reject('Failed to remove article from favorite articles')
     }
     console.error('Remove from favorite articles error:', error)
     return Promise.reject(error)
