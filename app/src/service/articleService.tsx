@@ -24,7 +24,7 @@ export const fetchArticles = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios fetch articles request error:', error)
-      return Promise.reject(new Error('Failed to fetch articles'))
+      return Promise.reject('Failed to fetch articles')
     }
     console.error('Fetch articles error:', error)
     return Promise.reject(error)
@@ -47,7 +47,7 @@ export const fetchArticle = async (
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios fetch article request error:', error)
-      return Promise.reject(new Error('Failed to fetch article'))
+      return Promise.reject('Failed to fetch an article')
     }
     console.error('Fetch article error:', error)
     return Promise.reject(error)
