@@ -77,11 +77,13 @@ function ArticleCard({ article }: { article: Article }) {
         <p className='text-gray-700 text-base line-clamp-3'>
           {article.description}
         </p>
-        <div className='pt-4'>
-          {article.tagList.map((t, index) => (
-            <ArticleTag tag={t} key={index} />
-          ))}
-        </div>
+        {article.tagList.length > 0 && (
+          <div className='pt-4'>
+            {article.tagList.map(
+              (t, index) => t !== '' && <ArticleTag tag={t} key={index} />
+            )}
+          </div>
+        )}
         <div>
           <Tooltip
             id='favorite-tooltip'
