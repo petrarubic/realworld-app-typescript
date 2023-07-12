@@ -9,15 +9,19 @@ const baseUrl = 'https://api.realworld.io/api'
 export const registerUser = async (credentials: RegisterCredentials) => {
   try {
     const res = await axios.post(`${baseUrl}/users`, { user: credentials })
-    const { token } = res.data.user
+    const { token }: { token: string } = res.data.user
     return token
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios register user request error:', error)
-      return error
+      if (error.response) {
+        throw error.response.data.errors
+      } else {
+        throw error
+      }
     }
     console.error('Register user error:', error)
-    return error
+    throw error
   }
 }
 
@@ -27,15 +31,19 @@ export const loginUser = async (credentials: LoginCredentials) => {
     const res = await axios.post(`${baseUrl}/users/login`, {
       user: credentials,
     })
-    const { token } = res.data.user
+    const { token }: { token: string } = res.data.user
     return token
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios login user request error:', error)
-      return error
+      if (error.response) {
+        throw error.response.data.errors
+      } else {
+        throw error
+      }
     }
     console.error('Login user error:', error)
-    return error
+    throw error
   }
 }
 
