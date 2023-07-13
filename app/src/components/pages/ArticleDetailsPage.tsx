@@ -19,7 +19,9 @@ function ArticleDetailsPage() {
     queryFn: () => fetchArticle(slug),
   })
 
-  const [followedUser, setFollowedUser] = useState(data?.author)
+  const [isAuthorFollowed, setIsAuthorFollowed] = useState(
+    data?.author.following
+  )
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -40,7 +42,8 @@ function ArticleDetailsPage() {
     }
 
     fetchUserData()
-  }, [data?.author.username])
+    setIsAuthorFollowed(data?.author.following)
+  }, [data?.author])
 
   if (isLoading) {
     return (
@@ -64,7 +67,7 @@ function ArticleDetailsPage() {
     const handleFollowUser = async () => {
       try {
         const updatedAuthor = await followUser(data.author)
-        setFollowedUser(updatedAuthor)
+        setIsAuthorFollowed(updatedAuthor.following)
       } catch (error) {
         console.error('Error with following the selected article author', error)
       }
@@ -73,7 +76,7 @@ function ArticleDetailsPage() {
     const handleUnfollowUser = async () => {
       try {
         const updatedAuthor = await unfollowUser(data.author)
-        setFollowedUser(updatedAuthor)
+        setIsAuthorFollowed(updatedAuthor.following)
       } catch (error) {
         console.error(
           'Error with unfollowing the selected article author',
@@ -105,19 +108,15 @@ function ArticleDetailsPage() {
                   <button
                     data-tooltip-id='follow-tooltip'
                     data-tooltip-content={
-                      !followedUser?.following ? 'Follow User' : 'Unfollow User'
+                      !isAuthorFollowed ? 'Follow User' : 'Unfollow User'
                     }
                     onClick={() => {
-                      !followedUser?.following
+                      !isAuthorFollowed
                         ? handleFollowUser()
                         : handleUnfollowUser()
                     }}
                   >
-                    {!followedUser?.following ? (
-                      <UserPlusIcon />
-                    ) : (
-                      <UserMinusIcon />
-                    )}
+                    {!isAuthorFollowed ? <UserPlusIcon /> : <UserMinusIcon />}
                   </button>
                 )}
               </p>
