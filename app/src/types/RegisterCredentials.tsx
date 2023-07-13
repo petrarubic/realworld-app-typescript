@@ -1,5 +1,3 @@
-export interface RegisterCredentials {
-  email: string
-  username: string
-  password: string
-}
+import { User } from './User'
+
+export type RegisterCredentials = Pick<User, 'email' | 'username' | 'password'>

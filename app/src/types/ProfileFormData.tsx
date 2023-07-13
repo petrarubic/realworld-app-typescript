@@ -1,6 +1,3 @@
-export interface ProfileFormData {
-  email: string
-  username: string
-  bio: string | null
-  image: string | null
-}
+import { User } from './User'
+
+export type ProfileFormData = Pick<User, 'email' | 'username' | 'bio' | 'image'>

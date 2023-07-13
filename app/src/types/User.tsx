@@ -3,6 +3,7 @@ export interface User {
   password: string
   token: string
   username: string
-  bio: string | null
-  image: string | null
+  bio?: string
+  image?: string
+  following: boolean
 }

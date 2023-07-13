@@ -1,4 +1,3 @@
-export interface LoginCredentials {
-  email: string
-  password: string
-}
+import { User } from './User'
+
+export type LoginCredentials = Pick<User, 'email' | 'password'>
