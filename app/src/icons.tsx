@@ -80,15 +80,23 @@ export function ArrowRightIcon() {
   )
 }
 
-export function TrashIcon() {
+export function TrashIcon({
+  strokeColor,
+  width,
+  height,
+}: {
+  strokeColor: string
+  width: number
+  height: number
+}) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
       fill='none'
       viewBox='0 0 24 24'
       strokeWidth={1.5}
-      stroke='#4f46e5'
-      className='w-6 h-6'
+      stroke={strokeColor}
+      className={`w-${width} h-${height}`}
     >
       <path
         strokeLinecap='round'

@@ -77,7 +77,7 @@ function ArticleCard({ article }: { article: Article }) {
         <p className='text-gray-700 text-base line-clamp-3'>
           {article.description}
         </p>
-        {article.tagList.length > 0 && (
+        {article.tagList && article.tagList?.length > 0 && (
           <div className='pt-4'>
             {article.tagList.map(
               (t, index) => t !== '' && <ArticleTag tag={t} key={index} />
@@ -150,7 +150,7 @@ function ArticleCard({ article }: { article: Article }) {
               onClick={handleDelete}
               className={showActionButtons ? '' : 'hidden'}
             >
-              <TrashIcon />
+              <TrashIcon strokeColor='#4f46e5' width={6} height={6} />
             </button>
           </div>
           <Link

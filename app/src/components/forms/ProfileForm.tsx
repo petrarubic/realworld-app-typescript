@@ -7,7 +7,6 @@ type ProfileFormProps = {
 }
 
 const ProfileForm = ({ onSubmit, initialData }: ProfileFormProps) => {
-  console.log(initialData)
   const {
     register,
     handleSubmit,

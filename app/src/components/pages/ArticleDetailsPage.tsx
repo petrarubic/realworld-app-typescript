@@ -9,6 +9,7 @@ import { UserMinusIcon, UserPlusIcon } from '../../icons'
 import { useEffect, useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import { fetchCurrentUser } from '../../service/authService'
+import ArticleCommentSection from '../ArticleCommentSection'
 
 function ArticleDetailsPage() {
   const { slug } = useParams()
@@ -86,7 +87,7 @@ function ArticleDetailsPage() {
     }
 
     return (
-      <div className='flex justify-center items-center'>
+      <div className='flex flex-col justify-center items-center'>
         <div className='w-full px-8 md:px-32 xl:px-96 py-10'>
           <Tooltip
             id='follow-tooltip'
@@ -128,6 +129,7 @@ function ArticleDetailsPage() {
           <p className='font-extrabold text-4xl mb-5'>{data.title}</p>
           <p className='text-xl text-gray-700 mb-5'>{data.description}</p>
           <p className='whitespace-pre-line'>{formattedBody}</p>
+          <ArticleCommentSection />
         </div>
       </div>
     )
