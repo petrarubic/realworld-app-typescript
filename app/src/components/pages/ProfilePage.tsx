@@ -4,7 +4,7 @@ import ProfileForm from '../forms/ProfileForm'
 import { User } from '../../types/User'
 import { useQuery } from 'react-query'
 import { fetchCurrentUser } from '../../service/authService'
-import Spinner from '../Spinner'
+import Spinner from '../shared/Spinner'
 import { editProfile } from '../../service/profileService'
 
 function ProfilePage() {

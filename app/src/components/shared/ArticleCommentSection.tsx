@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react'
-import { CommentFormData } from '../types/CommentFormData'
-import CommentForm from './forms/CommentForm'
-import { addComment, fetchComments } from '../service/commentService'
+import { CommentFormData } from '../../types/CommentFormData'
+import CommentForm from '../forms/CommentForm'
+import { addComment, fetchComments } from '../../service/commentService'
 import { useQuery } from 'react-query'
-import { Comment } from '../types/Comment'
+import { Comment } from '../../types/Comment'
 import CommentCard from './CommentCard'
 import { useParams } from 'react-router'
 

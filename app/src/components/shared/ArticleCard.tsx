@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom'
 import { Tooltip } from 'react-tooltip'
-import { ArrowRightIcon, EditIcon, StarIcon, TrashIcon } from '../icons'
-import { Article } from '../types/Article'
-import { formatDateString } from '../utils/utils'
-import ArticleTag from './ArticleTag'
+import { ArrowRightIcon, EditIcon, StarIcon, TrashIcon } from '../../icons'
+import { Article } from '../../types/Article'
+import { formatDateString } from '../../utils/utils'
 import {
   addToFavoriteArticles,
   deleteArticle,
   removeFromFavoriteArticles,
-} from '../service/articleService'
+} from '../../service/articleService'
 import { useEffect, useState } from 'react'
-import { fetchCurrentUser } from '../service/authService'
+import { fetchCurrentUser } from '../../service/authService'
+import ArticleTag from './ArticleTag'
 
 function ArticleCard({ article }: { article: Article }) {
   const [favoriteArticle, setFavoriteArticle] = useState(article)

@@ -8,7 +8,7 @@ import {
   editArticle,
   fetchArticle,
 } from '../../service/articleService'
-import Spinner from '../Spinner'
+import Spinner from '../shared/Spinner'
 import { useState } from 'react'
 
 function ArticleFormPage() {

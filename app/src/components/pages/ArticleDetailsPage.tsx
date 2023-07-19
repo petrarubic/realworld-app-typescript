@@ -2,14 +2,14 @@ import { useQuery } from 'react-query'
 import { useParams } from 'react-router'
 import { Article } from '../../types/Article'
 import { fetchArticle } from '../../service/articleService'
-import Spinner from '../Spinner'
+import Spinner from '../shared/Spinner'
 import { formatDateString } from '../../utils/utils'
 import { followUser, unfollowUser } from '../../service/profileService'
 import { UserMinusIcon, UserPlusIcon } from '../../icons'
 import { useEffect, useState } from 'react'
 import { Tooltip } from 'react-tooltip'
 import { fetchCurrentUser } from '../../service/authService'
-import ArticleCommentSection from '../ArticleCommentSection'
+import ArticleCommentSection from '../shared/ArticleCommentSection'
 
 function ArticleDetailsPage() {
   const { slug } = useParams()

@@ -1,10 +1,10 @@
 import { Tooltip } from 'react-tooltip'
-import { TrashIcon } from '../icons'
-import { deleteComment } from '../service/commentService'
-import { Comment } from '../types/Comment'
-import { formatDateString } from '../utils/utils'
+import { TrashIcon } from '../../icons'
+import { deleteComment } from '../../service/commentService'
+import { Comment } from '../../types/Comment'
+import { formatDateString } from '../../utils/utils'
 import { useEffect, useState } from 'react'
-import { fetchCurrentUser } from '../service/authService'
+import { fetchCurrentUser } from '../../service/authService'
 
 function CommentCard({
   comment,
