@@ -5,6 +5,12 @@ import { fetchArticles } from '../../service/articleService'
 import { Article } from '../../types/Article'
 import ArticleCard from '../shared/ArticleCard'
 import Spinner from '../shared/Spinner'
+import {
+  PlusSmallIcon,
+  ArrowRightIcon,
+  ArrowLeftIcon,
+} from '@heroicons/react/24/outline'
+import { Button } from '@/components/ui/button'
 
 function HomePage() {
   const navigate = useNavigate()
@@ -57,35 +63,44 @@ function HomePage() {
 
   return (
     <div className='bg-gray-100 py-5'>
-      <div className='flex justify-end px-6'>
-        <Link
-          to={`/articles/new`}
-          className='inline-block text-center w-40 rounded-md bg-gray-400 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-gray-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600'
-        >
-          Create New Article
-        </Link>
+      <div className='flex justify-end px-6 items-center pb-4'>
+        <Button asChild className='w-30 bg-indigo-600 hover:bg-indigo-900'>
+          <Link to={`/articles/new`}>
+            <p className='flex items-center space-x-2'>
+              <PlusSmallIcon className='w-5 h-5' />
+              <span>New article</span>
+            </p>
+          </Link>
+        </Button>
       </div>
-      <div className='p-10 grid grid-cols-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5'>
+      <hr />
+      <div className='grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8 px-10 py-10'>
         {data?.map((article) => (
           <ArticleCard article={article} key={article.slug} />
         ))}
       </div>
       <div className='flex justify-center mt-5'>
-        <button
-          className='w-24 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:bg-gray-400'
+        <Button
+          className='w-28 bg-indigo-600 hover:bg-indigo-900 disabled:bg-gray-400'
           onClick={handlePrevClick}
           disabled={currentPage === 1}
         >
-          Previous
-        </button>
+          <p className='flex space-x-2 items-center'>
+            <ArrowLeftIcon className='w-4 h-4' />
+            <span>Previous</span>
+          </p>
+        </Button>
         <span className='px-4 py-2 mx-2 text-sm'>Page {currentPage}</span>
-        <button
-          className='w-24 rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:cursor-not-allowed disabled:bg-gray-400'
+        <Button
+          className='w-28 bg-indigo-600 hover:bg-indigo-900 disabled:bg-gray-400'
           onClick={handleNextClick}
           disabled={currentPage === totalPages}
         >
-          Next
-        </button>
+          <p className='flex space-x-2 items-center'>
+            <ArrowRightIcon className='w-4 h-4' />
+            <span>Next</span>
+          </p>
+        </Button>
       </div>
     </div>
   )

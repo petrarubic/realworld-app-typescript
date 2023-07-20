@@ -6,12 +6,37 @@ import {
 } from '@heroicons/react/24/outline'
 import { Link, useLocation } from 'react-router-dom'
 import ProfileDropdown from './ProfileDropdown'
+import { useEffect, useState } from 'react'
 
 function Navbar() {
+  const [isScrolled, setIsScrolled] = useState(false)
   const location = useLocation()
 
+  const handleScroll = () => {
+    const scrollPosition = window.scrollY
+    const threshold = 80
+
+    if (scrollPosition > threshold) {
+      setIsScrolled(true)
+    } else {
+      setIsScrolled(false)
+    }
+  }
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll)
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [])
+
   return (
-    <Disclosure as='nav' className='bg-white shadow'>
+    <Disclosure
+      as='nav'
+      className={`bg-white shadow ${
+        isScrolled && 'fixed top-0 left-0 right-0'
+      }`}
+    >
       {({ open }) => (
         <>
           <div className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'>

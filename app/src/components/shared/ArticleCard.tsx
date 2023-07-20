@@ -1,6 +1,4 @@
 import { Link } from 'react-router-dom'
-import { Tooltip } from 'react-tooltip'
-import { ArrowRightIcon, EditIcon, StarIcon, TrashIcon } from '../../icons'
 import { Article } from '../../types/Article'
 import { formatDateString } from '../../utils/utils'
 import {
@@ -10,7 +8,30 @@ import {
 } from '../../service/articleService'
 import { useEffect, useState } from 'react'
 import { fetchCurrentUser } from '../../service/authService'
-import ArticleTag from './ArticleTag'
+import {
+  PencilSquareIcon,
+  TrashIcon,
+  ArrowRightIcon,
+  StarIcon,
+} from '@heroicons/react/24/outline'
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { Badge } from '@/components/ui/badge'
+import { Separator } from '@/components/ui/separator'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 function ArticleCard({ article }: { article: Article }) {
   const [favoriteArticle, setFavoriteArticle] = useState(article)
@@ -65,104 +86,121 @@ function ArticleCard({ article }: { article: Article }) {
   }, [article.author.username])
 
   return (
-    <div className='max-w-sm rounded overflow-hidden shadow-lg bg-white'>
-      <div className='bg-indigo-600 p-2'>
-        <div className='text-sm flex justify-between items-center text-white'>
-          <p className='font-semibold'>{article.author.username}</p>
-          <p className='text-xs'>{formatDateString(article.createdAt)}</p>
+    <Card className='rounded-lg max-h-[340px]'>
+      <CardHeader className='rounded-t-lg p-4'>
+        <div className='text-sm flex justify-between items-center pb-2'>
+          <p className='font-semibold flex items-center space-x-4'>
+            <span>
+              <Avatar>
+                <AvatarImage
+                  src={article.author.image}
+                  alt='Author profile image'
+                />
+                <AvatarFallback>AV</AvatarFallback>
+              </Avatar>
+            </span>
+            <span className='text-base'>{article.author.username}</span>
+          </p>
+          <p className='text-sm text-gray-600'>
+            {formatDateString(article.createdAt)}
+          </p>
         </div>
-      </div>
-      <div className='p-2'>
-        <p className='font-bold text-xl mb-2 line-clamp-2'>{article.title}</p>
-        <p className='text-gray-700 text-base line-clamp-3'>
+        <Separator />
+      </CardHeader>
+      <CardContent className='space-y-4'>
+        <CardTitle className='line-clamp-2 pb-1'>{article.title}</CardTitle>
+        <CardDescription className='text-gray-700 line-clamp-3'>
           {article.description}
-        </p>
+        </CardDescription>
         {article.tagList && article.tagList?.length > 0 && (
-          <div className='pt-4'>
+          <div className='space-x-2'>
             {article.tagList.map(
-              (t, index) => t !== '' && <ArticleTag tag={t} key={index} />
+              (t, index) =>
+                t !== '' && (
+                  <Badge variant='secondary' key={index} className='h-6'>
+                    {t}
+                  </Badge>
+                )
             )}
           </div>
         )}
-        <div>
-          <Tooltip
-            id='favorite-tooltip'
-            style={{
-              padding: '4px',
-              fontSize: '10px',
-              backgroundColor: '#4f46e5',
-            }}
-          />
-          <Tooltip
-            id='edit-tooltip'
-            style={{
-              padding: '4px',
-              fontSize: '10px',
-              backgroundColor: '#4f46e5',
-            }}
-          />
-          <Tooltip
-            id='delete-tooltip'
-            style={{
-              padding: '4px',
-              fontSize: '10px',
-              backgroundColor: '#4f46e5',
-            }}
-          />
-          <Tooltip
-            id='read-more-tooltip'
-            style={{
-              padding: '4px',
-              fontSize: '10px',
-              backgroundColor: '#4f46e5',
-            }}
-          />
+      </CardContent>
+      <CardFooter className='flex justify-between items-center'>
+        <div className='flex justify-start items-center space-x-1'>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant='ghost'
+                  size='icon'
+                  onClick={() => {
+                    !favoriteArticle.favorited
+                      ? handleAddToFavorites()
+                      : handleRemoveFromFavorites()
+                  }}
+                >
+                  <StarIcon
+                    className={`w-6 h-6 text-indigo-600 hover:text-indigo-950 ${
+                      !favoriteArticle.favorited
+                        ? 'fill-white'
+                        : 'fill-indigo-600'
+                    }`}
+                  />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {!favoriteArticle.favorited ? 'Favorite' : 'Unfavorite'}
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button asChild variant='ghost' size='icon'>
+                  <Link
+                    to={`/articles/${article.slug}/edit`}
+                    className={showActionButtons ? '' : 'hidden'}
+                  >
+                    <PencilSquareIcon className='w-6 h-6 text-indigo-600 hover:text-indigo-950' />
+                  </Link>
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Edit</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant='ghost'
+                  size='icon'
+                  onClick={handleDelete}
+                  className={showActionButtons ? '' : 'hidden'}
+                >
+                  <TrashIcon className='w-6 h-6 text-indigo-600 hover:text-indigo-950' />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Delete</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         </div>
-        <div className='flex justify-between items-center mt-4'>
-          <div className='flex items-center space-x-1'>
-            <button
-              data-tooltip-id='favorite-tooltip'
-              data-tooltip-content={
-                !favoriteArticle.favorited ? 'Favorite' : 'Unfavorite'
-              }
-              onClick={() => {
-                !favoriteArticle.favorited
-                  ? handleAddToFavorites()
-                  : handleRemoveFromFavorites()
-              }}
-            >
-              <StarIcon
-                fillColor={!favoriteArticle.favorited ? '#ffffff' : '#4f46e5'}
-                strokeColor='#4f46e5'
-              />
-            </button>
-            <Link
-              to={`/articles/${article.slug}/edit`}
-              data-tooltip-id='edit-tooltip'
-              data-tooltip-content='Edit'
-              className={showActionButtons ? '' : 'hidden'}
-            >
-              <EditIcon />
-            </Link>
-            <button
-              data-tooltip-id='delete-tooltip'
-              data-tooltip-content='Delete'
-              onClick={handleDelete}
-              className={showActionButtons ? '' : 'hidden'}
-            >
-              <TrashIcon strokeColor='#4f46e5' width={6} height={6} />
-            </button>
-          </div>
-          <Link
-            to={`/articles/${article.slug}/details`}
-            data-tooltip-id='read-more-tooltip'
-            data-tooltip-content='Read more'
-          >
-            <ArrowRightIcon />
-          </Link>
-        </div>
-      </div>
-    </div>
+
+        <TooltipProvider>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button asChild variant='ghost' size='icon'>
+                <Link to={`/articles/${article.slug}/details`}>
+                  <ArrowRightIcon className='w-5 h-5 text-indigo-600 hover:text-indigo-950' />
+                </Link>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Read more</TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
+      </CardFooter>
+    </Card>
   )
 }
 

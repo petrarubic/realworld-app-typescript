@@ -5,6 +5,8 @@ import { Fragment, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { Button } from '@/components/ui/button'
 
 function ProfileDropdown() {
   const navigate = useNavigate()
@@ -28,15 +30,17 @@ function ProfileDropdown() {
   return (
     <Menu as='div' className='relative ml-3'>
       <div className='flex flex-row space-x-4 items-center'>
+        <p className='text-sm font-semibold hidden sm:block'>
+          {currentUser?.username}
+        </p>
         <Menu.Button className='flex rounded-full bg-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2'>
           <span className='sr-only'>Open user menu</span>
-          <img
-            className='h-8 w-8 rounded-full'
-            src={currentUser?.image}
-            alt='Profile image'
-          />
+          <Avatar>
+            <AvatarImage src={currentUser?.image} alt='Profile image' />
+            <AvatarFallback>AV</AvatarFallback>
+          </Avatar>
+          <img />
         </Menu.Button>
-        <p className='text-sm font-semibold'>{currentUser?.username}</p>
       </div>
       <Transition
         as={Fragment}
@@ -49,31 +53,21 @@ function ProfileDropdown() {
       >
         <Menu.Items className='absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
           <Menu.Item>
-            {({ active }) => (
-              <Link
-                to='/profile'
-                className={`${
-                  active ? 'bg-gray-100' : ''
-                } block px-4 py-2 text-sm text-gray-700`}
-              >
-                Your Profile
-              </Link>
-            )}
+            <Button asChild variant='ghost' className='justify-start w-full'>
+              <Link to='/profile'>Your Profile</Link>
+            </Button>
           </Menu.Item>
           <Menu.Item>
-            {({ active }) => (
-              <button
-                onClick={handleLogout}
-                className={`${
-                  active ? 'bg-gray-100' : ''
-                } block w-full text-left px-4 py-2 text-sm text-gray-700`}
-              >
-                <p className='flex flex-row space-x-2'>
-                  <span>Log out</span>
-                  <ArrowRightCircleIcon className='w-5 h-5' />
-                </p>
-              </button>
-            )}
+            <Button
+              variant='ghost'
+              onClick={handleLogout}
+              className='justify-start w-full'
+            >
+              <p className='flex flex-row space-x-2'>
+                <span>Log out</span>
+                <ArrowRightCircleIcon className='w-5 h-5' />
+              </p>
+            </Button>
           </Menu.Item>
         </Menu.Items>
       </Transition>

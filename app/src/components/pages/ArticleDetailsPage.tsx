@@ -5,11 +5,18 @@ import { fetchArticle } from '../../service/articleService'
 import Spinner from '../shared/Spinner'
 import { formatDateString } from '../../utils/utils'
 import { followUser, unfollowUser } from '../../service/profileService'
-import { UserMinusIcon, UserPlusIcon } from '../../icons'
 import { useEffect, useState } from 'react'
-import { Tooltip } from 'react-tooltip'
 import { fetchCurrentUser } from '../../service/authService'
 import ArticleCommentSection from '../shared/ArticleCommentSection'
+import { UserPlusIcon, UserMinusIcon } from '@heroicons/react/24/outline'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 
 function ArticleDetailsPage() {
   const { slug } = useParams()
@@ -89,39 +96,46 @@ function ArticleDetailsPage() {
     return (
       <div className='flex flex-col justify-center items-center'>
         <div className='w-full px-8 md:px-32 xl:px-96 py-10'>
-          <Tooltip
-            id='follow-tooltip'
-            style={{
-              padding: '4px',
-              fontSize: '10px',
-            }}
-          />
-          <div className='flex flex-row space-x-4'>
-            <img
-              src={data.author.image ? data.author.image : ''}
-              alt='Profile image'
-              className='rounded-full w-14 h-14'
-            />
+          <div className='flex flex-row space-x-4 items-start'>
+            <Avatar className='w-14 h-14'>
+              <AvatarImage
+                src={data.author.image ? data.author.image : ''}
+                alt='Profile image'
+              />
+              <AvatarFallback>AV</AvatarFallback>
+            </Avatar>
+
             <div className='pb-5'>
-              <p className='font-bold text-xl flex items-center space-x-1'>
-                <span>{data.author.username}</span>
+              <p className='text-xl flex items-start space-x-1'>
+                <span className='font-bold'>{data.author.username}</span>
                 {showFollowButton && (
-                  <button
-                    data-tooltip-id='follow-tooltip'
-                    data-tooltip-content={
-                      !isAuthorFollowed ? 'Follow User' : 'Unfollow User'
-                    }
-                    onClick={() => {
-                      !isAuthorFollowed
-                        ? handleFollowUser()
-                        : handleUnfollowUser()
-                    }}
-                  >
-                    {!isAuthorFollowed ? <UserPlusIcon /> : <UserMinusIcon />}
-                  </button>
+                  <TooltipProvider>
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <Button
+                          variant='ghost'
+                          size='icon'
+                          onClick={() => {
+                            !isAuthorFollowed
+                              ? handleFollowUser()
+                              : handleUnfollowUser()
+                          }}
+                        >
+                          {!isAuthorFollowed ? (
+                            <UserPlusIcon className='w-6 h-6' />
+                          ) : (
+                            <UserMinusIcon className='w-6 h-6' />
+                          )}
+                        </Button>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        {!isAuthorFollowed ? 'Follow User' : 'Unfollow User'}
+                      </TooltipContent>
+                    </Tooltip>
+                  </TooltipProvider>
                 )}
               </p>
-              <p className='text-gray-500'>
+              <p className='text-gray-500 -mt-2'>
                 {formatDateString(data.createdAt)}
               </p>
             </div>

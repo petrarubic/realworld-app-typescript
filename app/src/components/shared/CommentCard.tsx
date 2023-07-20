@@ -1,10 +1,9 @@
-import { Tooltip } from 'react-tooltip'
-import { TrashIcon } from '../../icons'
 import { deleteComment } from '../../service/commentService'
 import { Comment } from '../../types/Comment'
 import { formatDateString } from '../../utils/utils'
 import { useEffect, useState } from 'react'
 import { fetchCurrentUser } from '../../service/authService'
+import { TrashIcon } from '@heroicons/react/24/outline'
 
 function CommentCard({
   comment,
@@ -47,14 +46,6 @@ function CommentCard({
 
   return (
     <div className='border-b border-b-gray-200 p-5'>
-      <Tooltip
-        id='delete-tooltip'
-        style={{
-          padding: '4px',
-          fontSize: '10px',
-          backgroundColor: '#9ca3af',
-        }}
-      />
       <div className='flex justify-between items-center pb-5'>
         <p className='flex space-x-8 items-center text-sm'>
           <span className='flex space-x-2 items-center'>
@@ -76,7 +67,7 @@ function CommentCard({
             data-tooltip-content='Delete'
             className='bg-gray-100 p-1 rounded-md'
           >
-            <TrashIcon strokeColor='#000000' width={5} height={5} />
+            <TrashIcon className='w-6 h-6' />
           </button>
         )}
       </div>
