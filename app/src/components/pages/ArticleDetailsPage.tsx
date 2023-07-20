@@ -122,9 +122,9 @@ function ArticleDetailsPage() {
                           }}
                         >
                           {!isAuthorFollowed ? (
-                            <UserPlusIcon className='w-6 h-6' />
+                            <UserPlusIcon className='w-6 h-6 text-indigo-600 hover:text-indigo-950' />
                           ) : (
-                            <UserMinusIcon className='w-6 h-6' />
+                            <UserMinusIcon className='w-6 h-6 text-indigo-600 hover:text-indigo-950' />
                           )}
                         </Button>
                       </TooltipTrigger>

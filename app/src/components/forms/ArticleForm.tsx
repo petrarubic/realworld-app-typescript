@@ -1,5 +1,19 @@
 import { useForm } from 'react-hook-form'
 import { ArticleFormData } from '../../types/ArticleFormData'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { Textarea } from '@/components/ui/textarea'
+import { Button } from '@/components/ui/button'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { articleFormSchema } from './validation/validators'
 
 type ArticleFormProps = {
   mode: string
@@ -8,110 +22,127 @@ type ArticleFormProps = {
 }
 
 const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
+  const formattedBody = initialData?.body.replace(/\\n/g, ' ')
+  const form = useForm<ArticleFormData>({
+    resolver: zodResolver(articleFormSchema),
+    defaultValues: {
+      title: initialData?.title || '',
+      description: initialData?.description || '',
+      body: formattedBody || '',
+      tagList: initialData?.tagList || [],
+    },
+  })
+
   const {
-    register,
     handleSubmit,
     formState: { errors },
-  } = useForm<ArticleFormData>()
+  } = form
 
   const handleFormSubmit = (data: ArticleFormData) => {
     onSubmit(data)
   }
 
-  const formattedBody = initialData?.body.replace(/\\n/g, ' ')
-
   return (
-    <div className='bg-white w-1/3 p-10 rounded-xl'>
-      <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-        <h2 className='text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
+    <Card className='w-1/3 p-10'>
+      <CardHeader>
+        <CardTitle className='text-center'>
           {mode === 'create' ? 'Create New Article' : 'Edit Article'}
-        </h2>
-      </div>
-      <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
-        <form
-          onSubmit={handleSubmit(handleFormSubmit)}
-          className='flex flex-col space-y-5'
-        >
-          <div className='space-y-2'>
-            <label className='block text-sm font-medium leading-6 text-gray-900'>
-              Title
-            </label>
-            <input
-              type='text'
-              {...register('title', { required: 'Title is required' })}
-              defaultValue={initialData?.title}
-              className='block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            />
-            {errors?.title?.message && (
-              <p className='mt-1 text-sm text-indigo-400'>
-                {errors.title.message}
-              </p>
-            )}
-          </div>
-
-          <div className='space-y-2'>
-            <label className='block text-sm font-medium leading-6 text-gray-900'>
-              Description
-            </label>
-            <input
-              type='text'
-              {...register('description', {
-                required: 'Description is required',
-              })}
-              defaultValue={initialData?.description}
-              className='block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            />
-            {errors?.description?.message && (
-              <p className='mt-1 text-sm text-indigo-400'>
-                {errors.description.message}
-              </p>
-            )}
-          </div>
-
-          <div className='space-y-2'>
-            <label className='block text-sm font-medium leading-6 text-gray-900'>
-              Body
-            </label>
-            <textarea
-              {...register('body', { required: 'Body is required' })}
-              defaultValue={formattedBody}
-              className='block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-            ></textarea>
-            {errors?.body?.message && (
-              <p className='mt-1 text-sm text-indigo-400'>
-                {errors.body.message}
-              </p>
-            )}
-          </div>
-
-          {mode === 'edit' ? null : (
-            <div className='space-y-2'>
-              <label className='block text-sm font-medium leading-6 text-gray-900'>
-                Tags
-              </label>
-              <input
-                type='text'
-                {...register('tagList')}
-                defaultValue={initialData?.tagList?.join(', ')}
-                className='block w-full rounded-md border-0 px-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
-              />
-              {errors?.tagList?.message && (
-                <p className='mt-1 text-sm text-indigo-400'>
-                  {errors.tagList.message}
-                </p>
+        </CardTitle>
+      </CardHeader>
+      <CardContent className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+        <Form {...form}>
+          <form onSubmit={handleSubmit(handleFormSubmit)} className='space-y-5'>
+            <FormField
+              control={form.control}
+              name='title'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='text-black'>Title</FormLabel>
+                  <FormControl>
+                    <Input
+                      className='focus-visible:ring-indigo-600'
+                      type='text'
+                      placeholder='Enter article title'
+                      {...field}
+                    />
+                  </FormControl>
+                  {errors?.title?.message && (
+                    <FormMessage>{errors.title.message}</FormMessage>
+                  )}
+                </FormItem>
               )}
-            </div>
-          )}
-
-          <div className='pt-3'>
-            <input
-              type='submit'
-              className='flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer'
             />
-          </div>
-        </form>
-      </div>
-    </div>
+            <FormField
+              control={form.control}
+              name='description'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='text-black'>Description</FormLabel>
+                  <FormControl>
+                    <Input
+                      className='focus-visible:ring-indigo-600'
+                      type='text'
+                      placeholder='Enter article short description'
+                      {...field}
+                    />
+                  </FormControl>
+                  {errors?.description?.message && (
+                    <FormMessage>{errors.description.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='body'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='text-black'>Body</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className='focus-visible:ring-indigo-600'
+                      placeholder='Enter article body'
+                      {...field}
+                    />
+                  </FormControl>
+                  {errors?.body?.message && (
+                    <FormMessage>{errors.body.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+            {mode === 'create' && (
+              <FormField
+                control={form.control}
+                name='tagList'
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className='text-black'>Tags</FormLabel>
+                    <FormControl>
+                      <Input
+                        className='focus-visible:ring-indigo-600'
+                        type='text'
+                        placeholder='Enter tags separated by comma'
+                        {...field}
+                      />
+                    </FormControl>
+                    {errors?.tagList?.message && (
+                      <FormMessage>{errors.tagList.message}</FormMessage>
+                    )}
+                  </FormItem>
+                )}
+              />
+            )}
+            <Button
+              type='submit'
+              className='bg-indigo-600 hover:bg-indigo-900 w-full'
+            >
+              Submit
+            </Button>
+          </form>
+        </Form>
+      </CardContent>
+    </Card>
   )
 }
 

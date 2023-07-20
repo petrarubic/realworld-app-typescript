@@ -66,50 +66,46 @@ function LoginForm() {
     <>
       <Form {...form}>
         <form onSubmit={onSubmit} className='space-y-8'>
-          <div>
-            <FormField
-              control={form.control}
-              name='email'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='text-black'>Email</FormLabel>
-                  <FormControl>
-                    <Input
-                      className='focus-visible:ring-indigo-600'
-                      type='text'
-                      placeholder='Enter your email'
-                      {...field}
-                    />
-                  </FormControl>
-                  {errors?.email?.message && (
-                    <FormMessage>{errors.email.message}</FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
-          </div>
-          <div>
-            <FormField
-              control={form.control}
-              name='password'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='text-black'>Password</FormLabel>
-                  <FormControl>
-                    <Input
-                      className='focus-visible:ring-indigo-600'
-                      type='password'
-                      placeholder='Enter your password'
-                      {...field}
-                    />
-                  </FormControl>
-                  {errors?.password?.message && (
-                    <FormMessage>{errors.password.message}</FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
-          </div>
+          <FormField
+            control={form.control}
+            name='email'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-black'>Email</FormLabel>
+                <FormControl>
+                  <Input
+                    className='focus-visible:ring-indigo-600'
+                    type='text'
+                    placeholder='Enter your email'
+                    {...field}
+                  />
+                </FormControl>
+                {errors?.email?.message && (
+                  <FormMessage>{errors.email.message}</FormMessage>
+                )}
+              </FormItem>
+            )}
+          />
+          <FormField
+            control={form.control}
+            name='password'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className='text-black'>Password</FormLabel>
+                <FormControl>
+                  <Input
+                    className='focus-visible:ring-indigo-600'
+                    type='password'
+                    placeholder='Enter your password'
+                    {...field}
+                  />
+                </FormControl>
+                {errors?.password?.message && (
+                  <FormMessage>{errors.password.message}</FormMessage>
+                )}
+              </FormItem>
+            )}
+          />
           <Button
             type='submit'
             className='bg-indigo-600 hover:bg-indigo-900 w-full'

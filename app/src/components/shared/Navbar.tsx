@@ -34,7 +34,7 @@ function Navbar() {
     <Disclosure
       as='nav'
       className={`bg-white shadow ${
-        isScrolled && 'fixed top-0 left-0 right-0'
+        isScrolled && 'fixed top-0 left-0 right-0 z-10'
       }`}
     >
       {({ open }) => (

@@ -1,29 +1,37 @@
 import { Link } from 'react-router-dom'
 import LoginForm from '../forms/LoginForm'
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/card'
+import { Button } from '@/components/ui/button'
 
 function LoginPage() {
   return (
     <div className='flex min-h-full flex-col justify-center items-center px-4 md:px-6 py-12 lg:px-8 bg-gray-100'>
-      <div className='bg-white w-full sm:w-3/4 md:w-2/4 lg:w-1/3 p-10 rounded-xl'>
-        <div className='sm:mx-auto sm:w-full sm:max-w-sm'>
-          <h2 className='mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900'>
+      <Card className='p-2 w-1/3'>
+        <CardHeader>
+          <CardTitle className='text-center'>
             Log in with existing account
-          </h2>
-        </div>
-        <div className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className='mt-10 sm:mx-auto sm:w-full sm:max-w-sm'>
           <LoginForm />
-        </div>
-        <p className='mt-10 text-center text-sm text-gray-500'>
-          Don't have an account?
-          <Link
-            to='/register'
-            className='font-semibold leading-6 text-indigo-600 hover:text-indigo-500'
+        </CardContent>
+        <CardFooter className='flex flex-col sm:flex-row mt-10 justify-center text-sm text-gray-500'>
+          <p>Don't have an account?</p>
+          <Button
+            variant='link'
+            asChild
+            className='text-indigo-600 hover:text-indigo-500 p-1'
           >
-            {' '}
-            Register here.
-          </Link>
-        </p>
-      </div>
+            <Link to='/register'>Register here.</Link>
+          </Button>
+        </CardFooter>
+      </Card>
     </div>
   )
 }
