@@ -107,7 +107,9 @@ function ArticleDetailsPage() {
 
             <div className='pb-5'>
               <p className='text-xl flex items-start space-x-1'>
-                <span className='font-bold'>{data.author.username}</span>
+                <span className={`font-bold ${!showFollowButton && 'pb-4'}`}>
+                  {data.author.username}
+                </span>
                 {showFollowButton && (
                   <TooltipProvider>
                     <Tooltip>

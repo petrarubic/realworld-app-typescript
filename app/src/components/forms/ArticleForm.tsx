@@ -84,7 +84,7 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
   }, [])
 
   return (
-    <Card className='w-1/3 p-10'>
+    <Card className='p-2 w-full sm:w-2/3 lg:w-1/3'>
       <CardHeader>
         <CardTitle className='text-center'>
           {mode === 'create' ? 'Create New Article' : 'Edit Article'}
@@ -109,45 +109,6 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
                   </FormControl>
                   {errors?.title?.message && (
                     <FormMessage>{errors.title.message}</FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='description'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='text-black'>Description</FormLabel>
-                  <FormControl>
-                    <Input
-                      className='focus-visible:ring-indigo-600'
-                      type='text'
-                      placeholder='Enter article short description'
-                      {...field}
-                    />
-                  </FormControl>
-                  {errors?.description?.message && (
-                    <FormMessage>{errors.description.message}</FormMessage>
-                  )}
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name='body'
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className='text-black'>Body</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      className='focus-visible:ring-indigo-600'
-                      placeholder='Enter article body'
-                      {...field}
-                    />
-                  </FormControl>
-                  {errors?.body?.message && (
-                    <FormMessage>{errors.body.message}</FormMessage>
                   )}
                 </FormItem>
               )}
@@ -191,6 +152,45 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
                 )}
               />
             )}
+            <FormField
+              control={form.control}
+              name='description'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='text-black'>Description</FormLabel>
+                  <FormControl>
+                    <Input
+                      className='focus-visible:ring-indigo-600'
+                      type='text'
+                      placeholder='Enter article short description'
+                      {...field}
+                    />
+                  </FormControl>
+                  {errors?.description?.message && (
+                    <FormMessage>{errors.description.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name='body'
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel className='text-black'>Body</FormLabel>
+                  <FormControl>
+                    <Textarea
+                      className='focus-visible:ring-indigo-600'
+                      placeholder='Enter article body'
+                      {...field}
+                    />
+                  </FormControl>
+                  {errors?.body?.message && (
+                    <FormMessage>{errors.body.message}</FormMessage>
+                  )}
+                </FormItem>
+              )}
+            />
             {errors?.tagList?.message && <span>{errors.tagList.message}</span>}
 
             <Button

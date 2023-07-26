@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 function RegisterPage() {
   return (
     <div className='flex min-h-full flex-col justify-center items-center px-4 md:px-6 py-12 lg:px-8 bg-gray-100'>
-      <Card className='p-2 sm:p-10 w-1/3'>
+      <Card className='p-2 w-full sm:w-2/3 lg:w-1/3'>
         <CardHeader>
           <CardTitle className='text-center'>Register new account</CardTitle>
         </CardHeader>
