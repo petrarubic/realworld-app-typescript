@@ -152,6 +152,7 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
                 )}
               />
             )}
+            {errors?.tagList?.message && <span>{errors.tagList.message}</span>}
             <FormField
               control={form.control}
               name='description'
@@ -191,7 +192,6 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
                 </FormItem>
               )}
             />
-            {errors?.tagList?.message && <span>{errors.tagList.message}</span>}
 
             <Button
               type='submit'

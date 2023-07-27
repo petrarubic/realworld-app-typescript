@@ -43,10 +43,8 @@ function ProfilePage() {
   }
 
   return (
-    <div className='flex flex-col min-h-full justify-center px-6 py-24 lg:px-24 bg-gray-100'>
-      <div className='bg-white w-full p-10 rounded-xl max-h-[550px]'>
-        <ProfileForm initialData={data} onSubmit={handleEditForm} />
-      </div>
+    <div className='flex flex-col min-h-full justify-center items-center px-6 py-12 lg:px-8 bg-gray-100'>
+      <ProfileForm initialData={data} onSubmit={handleEditForm} />
       <br />
       {isProfileEdited && errorMessage === '' ? (
         <p className='font-bold text-center'>Profile edited successfully!</p>

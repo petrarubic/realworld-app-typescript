@@ -27,3 +27,13 @@ export const articleFormSchema = z.object({
 export const commentFormSchema = z.object({
   body: z.string().nonempty('Body is required'),
 })
+
+export const profileFormSchema = z.object({
+  image: z.string().optional(),
+  email: z
+    .string()
+    .email('Email must be in a valid format')
+    .nonempty('Email is required'),
+  username: z.string().nonempty('Username is required'),
+  bio: z.string().optional(),
+})
