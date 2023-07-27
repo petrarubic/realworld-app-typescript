@@ -4,6 +4,14 @@ import { formatDateString } from '../../utils/utils'
 import { useEffect, useState } from 'react'
 import { fetchCurrentUser } from '../../service/authService'
 import { TrashIcon } from '@heroicons/react/24/outline'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from '@/components/ui/tooltip'
+import { Button } from '@/components/ui/button'
 
 function CommentCard({
   comment,
@@ -49,11 +57,13 @@ function CommentCard({
       <div className='flex justify-between items-center pb-5'>
         <p className='flex space-x-8 items-center text-sm'>
           <span className='flex space-x-2 items-center'>
-            <img
-              src={comment.author.image ? comment.author.image : ''}
-              alt='Profile image'
-              className='rounded-full w-8 h-8'
-            />
+            <Avatar className='w-8 h-8'>
+              <AvatarImage
+                src={comment.author.image ? comment.author.image : ''}
+                alt='Profile image'
+              />
+              <AvatarFallback>AV</AvatarFallback>
+            </Avatar>
             <span>{comment.author.username}</span>
           </span>
           <span className='text-gray-500'>
@@ -61,14 +71,22 @@ function CommentCard({
           </span>
         </p>
         {showDeleteButton && (
-          <button
-            onClick={handleDelete}
-            data-tooltip-id='delete-tooltip'
-            data-tooltip-content='Delete'
-            className='bg-gray-100 p-1 rounded-md'
-          >
-            <TrashIcon className='w-6 h-6' />
-          </button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant='ghost'
+                  size='icon'
+                  onClick={() => {
+                    handleDelete
+                  }}
+                >
+                  <TrashIcon className='w-6 h-6 text-indigo-600 hover:text-indigo-950' />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Delete comment</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
         )}
       </div>
       <p className='text-gray-600'>{comment.body}</p>

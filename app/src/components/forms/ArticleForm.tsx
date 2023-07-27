@@ -181,7 +181,7 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
                   <FormLabel className='text-black'>Body</FormLabel>
                   <FormControl>
                     <Textarea
-                      className='focus-visible:ring-indigo-600'
+                      className='focus-visible:ring-indigo-600 min-h-[200px]'
                       placeholder='Enter article body'
                       {...field}
                     />

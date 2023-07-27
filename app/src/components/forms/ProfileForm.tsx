@@ -18,6 +18,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { profileFormSchema } from './validation/validators'
 
@@ -59,11 +60,10 @@ const ProfileForm = ({ onSubmit, initialData }: ProfileFormProps) => {
           <form onSubmit={handleSubmit(handleFormSubmit)} className='space-y-5'>
             <div className='w-full flex justify-center'>
               {initialData?.image && (
-                <img
-                  src={initialData.image}
-                  alt='profile image'
-                  className='rounded-full w-48 h-48'
-                />
+                <Avatar className='w-48 h-48'>
+                  <AvatarImage src={initialData.image} alt='Profile image' />
+                  <AvatarFallback>AV</AvatarFallback>
+                </Avatar>
               )}
             </div>
             <FormField
