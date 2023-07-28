@@ -22,6 +22,17 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
 import {
   Tooltip,
@@ -173,19 +184,42 @@ function ArticleCard({ article }: { article: Article }) {
           </TooltipProvider>
 
           <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant='ghost'
-                  size='icon'
-                  onClick={handleDelete}
-                  className={showActionButtons ? '' : 'hidden'}
-                >
-                  <TrashIcon className='w-6 h-6 text-indigo-600 hover:text-indigo-950' />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Delete</TooltipContent>
-            </Tooltip>
+            <AlertDialog>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <AlertDialogTrigger>
+                    <Button
+                      variant='ghost'
+                      size='icon'
+                      className={showActionButtons ? '' : 'hidden'}
+                    >
+                      <TrashIcon className='w-6 h-6 text-indigo-600 hover:text-indigo-950' />
+                    </Button>
+                  </AlertDialogTrigger>
+                </TooltipTrigger>
+                <AlertDialogContent>
+                  <AlertDialogHeader>
+                    <AlertDialogTitle>
+                      Are you absolutely sure?
+                    </AlertDialogTitle>
+                    <AlertDialogDescription>
+                      This action cannot be undone. This will permanently delete
+                      selected article.
+                    </AlertDialogDescription>
+                  </AlertDialogHeader>
+                  <AlertDialogFooter>
+                    <AlertDialogCancel>Cancel</AlertDialogCancel>
+                    <AlertDialogAction
+                      onClick={handleDelete}
+                      className='bg-indigo-600 hover:bg-indigo-900'
+                    >
+                      Delete
+                    </AlertDialogAction>
+                  </AlertDialogFooter>
+                </AlertDialogContent>
+                <TooltipContent>Delete</TooltipContent>
+              </Tooltip>
+            </AlertDialog>
           </TooltipProvider>
         </div>
 
