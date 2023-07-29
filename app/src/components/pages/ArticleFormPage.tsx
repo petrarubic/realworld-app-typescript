@@ -9,14 +9,11 @@ import {
   fetchArticle,
 } from '../../service/articleService'
 import Spinner from '../shared/Spinner'
-import { useState } from 'react'
+import { useToast } from '@/components/ui/use-toast'
 
 function ArticleFormPage() {
   const { slug } = useParams()
-  const [createErrorMessage, setCreateErrorMessage] = useState('')
-  const [editErrorMessage, setEditErrorMessage] = useState('')
-  const [isArticleEdited, setIsArticleEdited] = useState(false)
-  const [isArticleCreated, setIsArticleCreated] = useState(false)
+  const { toast } = useToast()
 
   const { isLoading, isError, data, error } = useQuery<Article, Error>({
     queryKey: ['article', slug],
@@ -27,20 +24,36 @@ function ArticleFormPage() {
   const handleCreateForm = (data: ArticleFormData) => {
     createArticle(data)
       .then(() => {
-        setIsArticleCreated(true)
+        toast({
+          title: 'Data submitted successfully.',
+          description: 'New article was created.',
+          className: 'bg-green-50 text-green-800 border-green-100',
+        })
       })
       .catch((error) => {
-        setCreateErrorMessage(error)
+        toast({
+          title: 'Error has occurred.',
+          description: `Error: ${error}`,
+          className: 'bg-red-50 text-red-800 border-red-100',
+        })
       })
   }
 
   const handleEditForm = (data: ArticleFormData) => {
     editArticle(slug, data)
       .then(() => {
-        setIsArticleEdited(true)
+        toast({
+          title: 'Data submitted successfully.',
+          description: 'Selected article data was edited.',
+          className: 'bg-green-50 text-green-800 border-green-100',
+        })
       })
       .catch((error) => {
-        setEditErrorMessage(error)
+        toast({
+          title: 'Error has occurred.',
+          description: `Error: ${error}`,
+          className: 'bg-red-50 text-red-800 border-red-100',
+        })
       })
   }
 
@@ -63,29 +76,9 @@ function ArticleFormPage() {
   return (
     <div className='flex flex-col min-h-full justify-center items-center px-6 py-12 lg:px-8 bg-gray-100'>
       {slug ? (
-        <>
-          <ArticleForm
-            mode='edit'
-            onSubmit={handleEditForm}
-            initialData={data}
-          />
-          <br />
-          {isArticleEdited && editErrorMessage === '' ? (
-            <p className='font-bold'>Article edited successfully!</p>
-          ) : (
-            <p className='font-bold'>{editErrorMessage}</p>
-          )}
-        </>
+        <ArticleForm mode='edit' onSubmit={handleEditForm} initialData={data} />
       ) : (
-        <>
-          <ArticleForm mode='create' onSubmit={handleCreateForm} />
-          <br />
-          {isArticleCreated && createErrorMessage === '' ? (
-            <p className='font-bold'>Article created successfully!</p>
-          ) : (
-            <p className='font-bold'>{createErrorMessage}</p>
-          )}
-        </>
+        <ArticleForm mode='create' onSubmit={handleCreateForm} />
       )}
     </div>
   )

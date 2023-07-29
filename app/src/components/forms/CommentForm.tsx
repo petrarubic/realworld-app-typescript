@@ -36,6 +36,7 @@ function CommentForm({ onSubmit }: CommentFormProps) {
 
   const handleFormSubmit = (data: CommentFormData) => {
     onSubmit(data)
+    form.reset()
   }
 
   useEffect(() => {

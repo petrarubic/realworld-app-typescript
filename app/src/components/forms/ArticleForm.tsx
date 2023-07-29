@@ -71,6 +71,9 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
 
   const handleFormSubmit = (data: ArticleFormData) => {
     onSubmit(data)
+    if (mode === 'create') {
+      form.reset()
+    }
   }
 
   useEffect(() => {
