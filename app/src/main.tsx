@@ -6,11 +6,12 @@ import HomePage from './components/pages/HomePage'
 import RegisterPage from './components/pages/RegisterPage'
 import LoginPage from './components/pages/LoginPage'
 import ProfilePage from './components/pages/ProfilePage'
-import Navbar from './components/shared/Navbar'
 import { QueryClient, QueryClientProvider } from 'react-query'
 import ArticleDetailsPage from './components/pages/ArticleDetailsPage'
 import ArticleFormPage from './components/pages/ArticleFormPage'
 import { Toaster } from '@/components/ui/toaster'
+import ErrorPage from './components/pages/ErrorPage'
+import MainLayout from './components/layout/MainLayout'
 
 const queryClient = new QueryClient()
 
@@ -18,10 +19,9 @@ const router = createBrowserRouter([
   {
     path: '/',
     element: (
-      <>
-        <Navbar />
+      <MainLayout>
         <HomePage />
-      </>
+      </MainLayout>
     ),
   },
   {
@@ -35,38 +35,38 @@ const router = createBrowserRouter([
   {
     path: '/profile',
     element: (
-      <>
-        <Navbar />
+      <MainLayout>
         <ProfilePage />
-      </>
+      </MainLayout>
     ),
   },
   {
     path: '/articles/:slug/edit',
     element: (
-      <>
-        <Navbar />
+      <MainLayout>
         <ArticleFormPage />
-      </>
+      </MainLayout>
     ),
   },
   {
     path: '/articles/new',
     element: (
-      <>
-        <Navbar />
+      <MainLayout>
         <ArticleFormPage />
-      </>
+      </MainLayout>
     ),
   },
   {
     path: '/articles/:slug/details',
     element: (
-      <>
-        <Navbar />
+      <MainLayout>
         <ArticleDetailsPage />
-      </>
+      </MainLayout>
     ),
+  },
+  {
+    path: '*',
+    element: <ErrorPage />,
   },
 ])
 
