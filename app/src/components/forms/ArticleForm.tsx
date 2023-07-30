@@ -130,7 +130,7 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
                       formatCreateLabel={(inputValue) =>
                         `Create tag: ${inputValue}`
                       }
-                      placeholder='Enter tags separated by comma'
+                      placeholder='Choose from existing list of article tags / Enter tag name to create a new one'
                       options={tags}
                       onChange={(selectedOptions) => {
                         const selectedTags = selectedOptions
