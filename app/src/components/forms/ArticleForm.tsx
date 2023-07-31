@@ -13,9 +13,10 @@ import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
 import { Button } from '@/components/ui/button'
 import CreatableSelect from 'react-select/creatable'
+import { StylesConfig } from 'react-select'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { articleFormSchema } from './validation/validators'
-import { useEffect, useState } from 'react'
+import { CSSProperties, useEffect, useState } from 'react'
 import { fetchTags } from '@/service/tagsService'
 
 type ArticleFormProps = {
@@ -32,22 +33,26 @@ interface OptionType {
 const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
   const [tags, setTags] = useState<OptionType[]>([])
   const formattedBody = initialData?.body.replace(/\\n/g, ' ')
-  const customStyles = {
-    control: (provided: any, state: any) => ({
+  const customStyles: StylesConfig<OptionType, true> = {
+    control: (provided, state) => {
+      return {
+        ...provided,
+        marginTop: '10px',
+        fontSize: '0.875rem',
+        border: '1px solid #e2e8f0',
+        boxShadow: state.isFocused
+          ? '0 0 0 2px white, 0 0 0 4px #4f46e5'
+          : undefined,
+        '&:hover': {
+          borderColor: 'none',
+        },
+      }
+    },
+    option: (provided) => ({
       ...provided,
-      marginTop: '10px',
-      fontSize: '0.875rem',
-      border: '1px solid #e2e8f0',
-      boxShadow: state.isFocused ? '0 0 0 2px white, 0 0 0 4px #4f46e5' : null,
-      '&:hover': {
-        borderColor: 'none',
-      },
-    }),
-    option: (provided: any) => ({
-      ...provided,
       fontSize: '0.875rem',
     }),
-    placeholder: (provided: any) => ({
+    placeholder: (provided) => ({
       ...provided,
       color: '#64748b',
     }),
