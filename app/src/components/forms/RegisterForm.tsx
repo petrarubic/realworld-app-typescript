@@ -48,7 +48,7 @@ function RegisterForm() {
       .then((res) => {
         if (res) {
           localStorage.setItem('userToken', JSON.stringify(res))
-          navigate('/')
+          navigate('/articles/recent')
         }
       })
       .catch((error) => {

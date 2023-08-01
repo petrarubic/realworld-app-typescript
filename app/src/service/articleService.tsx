@@ -31,6 +31,33 @@ export const fetchArticles = async (
   }
 }
 
+// Retrieve a list of articles written by followed authors
+export const fetchFollowedArticles = async (
+  limit: number,
+  offset: number
+): Promise<Article[]> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+    const res = await axios.get(
+      `${baseUrl}/articles/feed?limit=${limit}&offset=${offset}`,
+      {
+        headers: {
+          Authorization: `Token ${authHeader}`,
+        },
+      }
+    )
+    return res.data.articles
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios fetch followed articles request error:', error)
+      return Promise.reject('Failed to fetch followed articles')
+    }
+    console.error('Fetch followed articles error:', error)
+    return Promise.reject(error)
+  }
+}
+
 // Retrieve single article details
 export const fetchArticle = async (
   slug: string | undefined

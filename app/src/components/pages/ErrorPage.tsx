@@ -14,7 +14,7 @@ const ErrorPage = () => {
       </p>
       <div className='mt-10'>
         <Button asChild className='bg-indigo-600 hover:bg-indigo-900 space-x-2'>
-          <Link to={'/'}>
+          <Link to={'/articles/recent'}>
             <p className='flex items-center space-x-2'>
               <ArrowLeftIcon className='w-3 h-3' />
               <span>Back to home</span>

@@ -1,7 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useQuery } from 'react-query'
-import { Link, useNavigate } from 'react-router-dom'
-import { fetchArticles } from '../../service/articleService'
+import { Link } from 'react-router-dom'
+import { fetchFollowedArticles } from '../../service/articleService'
 import { Article } from '../../types/Article'
 import ArticleCard from '../shared/ArticleCard'
 import Spinner from '../shared/Spinner'
@@ -12,14 +12,13 @@ import {
 } from '@heroicons/react/24/outline'
 import { Button } from '@/components/ui/button'
 
-function HomePage() {
-  const navigate = useNavigate()
+function ArticlesFollowing() {
   const [currentPage, setCurrentPage] = useState(1)
   const limit = 9
 
   const { isLoading, isError, data, error } = useQuery<Article[], Error>({
-    queryKey: ['articles', currentPage],
-    queryFn: () => fetchArticles(limit, (currentPage - 1) * limit),
+    queryKey: ['articles-following', currentPage],
+    queryFn: () => fetchFollowedArticles(limit, (currentPage - 1) * limit),
   })
 
   const handlePrevClick = () => {
@@ -37,14 +36,6 @@ function HomePage() {
   const hasMorePages = data?.length === limit
   const totalPages = hasMorePages ? currentPage + 1 : currentPage
 
-  useEffect(() => {
-    const token = localStorage.getItem('userToken')
-
-    if (!token) {
-      navigate('/register')
-    }
-  }, [navigate])
-
   if (isLoading) {
     return (
       <div className='flex justify-center items-center bg-gray-100 h-full'>
@@ -57,6 +48,21 @@ function HomePage() {
     return (
       <div className='flex justify-center items-center bg-gray-100 h-full text-lg font-bold'>
         {error.message}
+      </div>
+    )
+  }
+
+  if (!isLoading && data?.length === 0) {
+    return (
+      <div className='flex flex-col space-y-8 justify-center items-center bg-gray-100 h-full text-center'>
+        <p className='text-xl font-bold'>
+          Discover Articles from Authors You Follow
+        </p>
+        <p className='text-lg w-[700px]'>
+          It looks like you haven't followed any authors yet. Following authors
+          allows you to stay updated with their latest articles and never miss
+          out on exciting content.
+        </p>
       </div>
     )
   }
@@ -106,4 +112,4 @@ function HomePage() {
   )
 }
 
-export default HomePage
+export default ArticlesFollowing
