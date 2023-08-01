@@ -2,7 +2,6 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import HomePage from './components/pages/HomePage'
 import RegisterPage from './components/pages/RegisterPage'
 import LoginPage from './components/pages/LoginPage'
 import ProfilePage from './components/pages/ProfilePage'
@@ -12,15 +11,30 @@ import ArticleFormPage from './components/pages/ArticleFormPage'
 import { Toaster } from '@/components/ui/toaster'
 import ErrorPage from './components/pages/ErrorPage'
 import MainLayout from './components/layout/MainLayout'
+import ArticlesRecent from './components/pages/ArticlesRecent'
+import ArticlesFollowing from './components/pages/ArticlesFollowing'
+import PrivateRoute from './components/auth/PrivateRoute'
 
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: '/articles/recent',
     element: (
       <MainLayout>
-        <HomePage />
+        <PrivateRoute>
+          <ArticlesRecent />
+        </PrivateRoute>
+      </MainLayout>
+    ),
+  },
+  {
+    path: '/articles/following',
+    element: (
+      <MainLayout>
+        <PrivateRoute>
+          <ArticlesFollowing />
+        </PrivateRoute>
       </MainLayout>
     ),
   },
@@ -36,7 +50,9 @@ const router = createBrowserRouter([
     path: '/profile',
     element: (
       <MainLayout>
-        <ProfilePage />
+        <PrivateRoute>
+          <ProfilePage />
+        </PrivateRoute>
       </MainLayout>
     ),
   },
@@ -44,7 +60,9 @@ const router = createBrowserRouter([
     path: '/articles/:slug/edit',
     element: (
       <MainLayout>
-        <ArticleFormPage />
+        <PrivateRoute>
+          <ArticleFormPage />
+        </PrivateRoute>
       </MainLayout>
     ),
   },
@@ -52,7 +70,9 @@ const router = createBrowserRouter([
     path: '/articles/new',
     element: (
       <MainLayout>
-        <ArticleFormPage />
+        <PrivateRoute>
+          <ArticleFormPage />
+        </PrivateRoute>
       </MainLayout>
     ),
   },
@@ -60,7 +80,9 @@ const router = createBrowserRouter([
     path: '/articles/:slug/details',
     element: (
       <MainLayout>
-        <ArticleDetailsPage />
+        <PrivateRoute>
+          <ArticleDetailsPage />
+        </PrivateRoute>
       </MainLayout>
     ),
   },
