@@ -99,7 +99,13 @@ function ArticleDetailsPage() {
           <div className='flex flex-row space-x-4 items-start'>
             <Avatar className='w-14 h-14'>
               <AvatarImage
-                src={data.author.image ? data.author.image : ''}
+                src={
+                  data.author.image &&
+                  data.author.image !==
+                    'https://api.realworld.io/images/demo-avatar.png'
+                    ? data.author.image
+                    : `https://i.pravatar.cc/300?u=${data.author.username}`
+                }
                 alt='Profile image'
               />
               <AvatarFallback>AV</AvatarFallback>

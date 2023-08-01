@@ -70,7 +70,13 @@ function CommentCard({
           <span className='flex space-x-2 items-center'>
             <Avatar className='w-8 h-8'>
               <AvatarImage
-                src={comment.author.image ? comment.author.image : ''}
+                src={
+                  comment.author.image &&
+                  comment.author.image !==
+                    'https://api.realworld.io/images/demo-avatar.png'
+                    ? comment.author.image
+                    : `https://i.pravatar.cc/300?u=${comment.author.username}`
+                }
                 alt='Profile image'
               />
               <AvatarFallback>AV</AvatarFallback>

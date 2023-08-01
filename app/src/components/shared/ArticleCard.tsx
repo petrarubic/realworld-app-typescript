@@ -104,7 +104,13 @@ function ArticleCard({ article }: { article: Article }) {
             <span>
               <Avatar>
                 <AvatarImage
-                  src={article.author.image}
+                  src={
+                    article.author.image &&
+                    article.author.image !==
+                      'https://api.realworld.io/images/demo-avatar.png'
+                      ? article.author.image
+                      : `https://i.pravatar.cc/300?u=${article.author.username}`
+                  }
                   alt='Author profile image'
                 />
                 <AvatarFallback>AV</AvatarFallback>
