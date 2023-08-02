@@ -11,19 +11,30 @@ import ArticleFormPage from './components/pages/ArticleFormPage'
 import { Toaster } from '@/components/ui/toaster'
 import ErrorPage from './components/pages/ErrorPage'
 import MainLayout from './components/layout/MainLayout'
-import ArticlesRecent from './components/pages/ArticlesRecent'
-import ArticlesFollowing from './components/pages/ArticlesFollowing'
+import ArticlesRecentPage from './components/pages/ArticlesRecentPage'
+import ArticlesFollowingPage from './components/pages/ArticlesFollowingPage'
 import PrivateRoute from './components/auth/PrivateRoute'
+import HomePage from './components/pages/HomePage'
 
 const queryClient = new QueryClient()
 
 const router = createBrowserRouter([
   {
+    path: '/',
+    element: (
+      <MainLayout>
+        <PrivateRoute>
+          <HomePage />
+        </PrivateRoute>
+      </MainLayout>
+    ),
+  },
+  {
     path: '/articles/recent',
     element: (
       <MainLayout>
         <PrivateRoute>
-          <ArticlesRecent />
+          <ArticlesRecentPage />
         </PrivateRoute>
       </MainLayout>
     ),
@@ -33,7 +44,7 @@ const router = createBrowserRouter([
     element: (
       <MainLayout>
         <PrivateRoute>
-          <ArticlesFollowing />
+          <ArticlesFollowingPage />
         </PrivateRoute>
       </MainLayout>
     ),

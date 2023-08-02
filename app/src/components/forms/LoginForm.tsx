@@ -45,7 +45,7 @@ function LoginForm() {
       .then((res) => {
         if (res) {
           localStorage.setItem('userToken', JSON.stringify(res))
-          navigate('/articles/recent')
+          navigate('/')
         }
       })
       .catch((error) => {

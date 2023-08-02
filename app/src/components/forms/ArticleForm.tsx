@@ -16,7 +16,7 @@ import CreatableSelect from 'react-select/creatable'
 import { StylesConfig } from 'react-select'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { articleFormSchema } from './validation/validators'
-import { CSSProperties, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { fetchTags } from '@/service/tagsService'
 
 type ArticleFormProps = {

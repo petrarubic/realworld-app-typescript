@@ -7,7 +7,7 @@ import Spinner from '../shared/Spinner'
 import SubNavbar from '../shared/SubNavbar'
 import Pagination from '../shared/Pagination'
 
-function ArticlesFollowing() {
+function ArticlesFollowingPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const limit = 9
 
@@ -67,4 +67,4 @@ function ArticlesFollowing() {
   )
 }
 
-export default ArticlesFollowing
+export default ArticlesFollowingPage

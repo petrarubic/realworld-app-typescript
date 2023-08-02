@@ -58,6 +58,16 @@ function Navbar() {
                 </div>
                 <div className='hidden sm:ml-6 sm:flex sm:space-x-8'>
                   <Link
+                    to='/'
+                    className={`inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:border-b-2 hover:border-gray-300 hover:text-gray-700 ${
+                      location.pathname === '/'
+                        ? 'border-b-2 border-indigo-500'
+                        : ''
+                    }`}
+                  >
+                    Overview
+                  </Link>
+                  <Link
                     to='/articles/recent'
                     className={`inline-flex items-center px-1 pt-1 text-sm font-medium text-gray-900 hover:border-b-2 hover:border-gray-300 hover:text-gray-700 ${
                       location.pathname === '/articles/recent'
@@ -90,6 +100,18 @@ function Navbar() {
             <div className='space-y-1 pb-4 pt-2'>
               <Disclosure.Button className='w-full'>
                 <Link
+                  to='/'
+                  className={`block text-left border-l-4 w-full py-2 pl-3 pr-4 text-base font-medium hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 ${
+                    location.pathname === '/'
+                      ? 'border-indigo-500 bg-indigo-50 text-indigo-700'
+                      : 'text-gray-500'
+                  }`}
+                >
+                  Overview
+                </Link>
+              </Disclosure.Button>
+              <Disclosure.Button className='w-full'>
+                <Link
                   to='/articles/recent'
                   className={`block text-left border-l-4 w-full py-2 pl-3 pr-4 text-base font-medium hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 ${
                     location.pathname === '/articles/recent'
@@ -99,6 +121,8 @@ function Navbar() {
                 >
                   Recent
                 </Link>
+              </Disclosure.Button>
+              <Disclosure.Button className='w-full'>
                 <Link
                   to='/articles/following'
                   className={`block text-left border-l-4 w-full py-2 pl-3 pr-4 text-base font-medium hover:bg-gray-50 hover:border-gray-300 hover:text-gray-700 ${

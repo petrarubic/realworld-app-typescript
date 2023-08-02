@@ -7,7 +7,7 @@ import Spinner from '../shared/Spinner'
 import SubNavbar from '../shared/SubNavbar'
 import Pagination from '../shared/Pagination'
 
-function ArticlesRecent() {
+function ArticlesRecentPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const limit = 9
 
@@ -52,4 +52,4 @@ function ArticlesRecent() {
   )
 }
 
-export default ArticlesRecent
+export default ArticlesRecentPage
