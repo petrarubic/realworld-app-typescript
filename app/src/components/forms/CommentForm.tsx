@@ -12,16 +12,14 @@ import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { commentFormSchema } from './validation/validators'
-import { useEffect, useState } from 'react'
-import { User } from '@/types/User'
-import { fetchCurrentUser } from '@/service/authService'
+import { useUserData } from '@/auth'
 
 type CommentFormProps = {
   onSubmit: (data: CommentFormData) => void
 }
 
 function CommentForm({ onSubmit }: CommentFormProps) {
-  const [currentUser, setCurrentUser] = useState<User | undefined>()
+  const currentUser = useUserData()
 
   const form = useForm<CommentFormData>({
     resolver: zodResolver(commentFormSchema),
@@ -38,19 +36,6 @@ function CommentForm({ onSubmit }: CommentFormProps) {
     onSubmit(data)
     form.reset()
   }
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userData = await fetchCurrentUser()
-        setCurrentUser(userData)
-      } catch (error) {
-        console.error('Failed to fetch current user:', error)
-      }
-    }
-
-    fetchUserData()
-  }, [])
 
   return (
     <>

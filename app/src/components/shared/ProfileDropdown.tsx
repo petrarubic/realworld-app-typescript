@@ -1,32 +1,20 @@
-import { fetchCurrentUser } from '@/service/authService'
-import { User } from '@/types/User'
 import { Menu, Transition } from '@headlessui/react'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import { useNavigate } from 'react-router'
 import { Link } from 'react-router-dom'
 import { ArrowRightCircleIcon } from '@heroicons/react/24/outline'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { Button } from '@/components/ui/button'
+import { useUserData } from '@/auth'
 
 function ProfileDropdown() {
   const navigate = useNavigate()
+  const currentUser = useUserData()
   const handleLogout = () => {
     localStorage.removeItem('userToken')
     navigate('/login')
   }
-  const [currentUser, setCurrentUser] = useState<User | undefined>()
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const userData = await fetchCurrentUser()
-        setCurrentUser(userData)
-      } catch (error) {
-        console.error('Failed to fetch current user:', error)
-      }
-    }
 
-    fetchUserData()
-  }, [])
   return (
     <Menu as='div' className='relative ml-3'>
       <div className='flex flex-row space-x-4 items-center'>

@@ -23,6 +23,7 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import { useUserData } from '@/auth'
 
 function CommentCard({
   comment,
@@ -31,6 +32,7 @@ function CommentCard({
   comment: Comment
   slug: string | undefined
 }) {
+  const currentUser = useUserData()
   const [showDeleteButton, setShowDeleteButton] = useState(false)
 
   const handleDelete = async () => {
@@ -45,11 +47,10 @@ function CommentCard({
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await fetchCurrentUser()
         if (
-          userData &&
+          currentUser &&
           comment.author.username &&
-          userData.username === comment.author.username
+          currentUser.username === comment.author.username
         ) {
           setShowDeleteButton(true)
         } else {
@@ -61,7 +62,7 @@ function CommentCard({
     }
 
     fetchUserData()
-  }, [comment.author.username])
+  }, [comment.author.username, currentUser])
 
   return (
     <div className='border-b border-b-gray-200 p-5'>

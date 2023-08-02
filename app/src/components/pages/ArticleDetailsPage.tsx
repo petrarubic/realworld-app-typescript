@@ -6,7 +6,6 @@ import Spinner from '../shared/Spinner'
 import { formatDateString } from '../../utils/utils'
 import { followUser, unfollowUser } from '../../service/profileService'
 import { useEffect, useState } from 'react'
-import { fetchCurrentUser } from '../../service/authService'
 import ArticleCommentSection from '../shared/ArticleCommentSection'
 import { UserPlusIcon, UserMinusIcon } from '@heroicons/react/24/outline'
 import {
@@ -17,9 +16,11 @@ import {
 } from '@/components/ui/tooltip'
 import { Button } from '@/components/ui/button'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useUserData } from '@/auth'
 
 function ArticleDetailsPage() {
   const { slug } = useParams()
+  const currentUser = useUserData()
   const [showFollowButton, setShowFollowButton] = useState(false)
 
   const { isLoading, isError, data, error } = useQuery<Article, Error>({
@@ -34,24 +35,23 @@ function ArticleDetailsPage() {
   useEffect(() => {
     const fetchUserData = async () => {
       try {
-        const userData = await fetchCurrentUser()
         if (
-          userData &&
+          currentUser &&
           data?.author.username &&
-          userData.username === data?.author.username
+          currentUser.username === data?.author.username
         ) {
           setShowFollowButton(false)
         } else {
           setShowFollowButton(true)
         }
       } catch (error) {
-        console.error('Failed to fetch current user:', error)
+        console.error('Failed to fetch current user and author data:', error)
       }
     }
 
     fetchUserData()
     setIsAuthorFollowed(data?.author.following)
-  }, [data?.author])
+  }, [currentUser, data?.author])
 
   if (isLoading) {
     return (
