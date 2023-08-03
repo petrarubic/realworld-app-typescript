@@ -6,27 +6,61 @@ const baseUrl = 'https://api.realworld.io/api'
 
 // Retrieve a list of recent articles
 export const fetchArticles = async (
-  limit: number,
-  offset: number
+  limit?: number,
+  offset?: number
 ): Promise<Article[]> => {
   try {
     const token = localStorage.getItem('userToken')
     const authHeader = token?.replace(/^"(.*)"$/, '$1')
-    const res = await axios.get(
-      `${baseUrl}/articles?limit=${limit}&offset=${offset}`,
-      {
+
+    if (limit || offset) {
+      const res = await axios.get(
+        `${baseUrl}/articles?limit=${limit}&offset=${offset}`,
+        {
+          headers: {
+            Authorization: `Token ${authHeader}`,
+          },
+        }
+      )
+      return res.data.articles
+    } else {
+      const res = await axios.get(`${baseUrl}/articles`, {
         headers: {
           Authorization: `Token ${authHeader}`,
         },
-      }
-    )
-    return res.data.articles
+      })
+      return res.data.articles
+    }
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios fetch articles request error:', error)
       return Promise.reject('Failed to fetch articles')
     }
     console.error('Fetch articles error:', error)
+    return Promise.reject(error)
+  }
+}
+
+// Retrieve article count by author
+export const fetchArticleCountByAuthor = async (
+  author: string
+): Promise<number> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+
+    const res = await axios.get(`${baseUrl}/articles?author=${author}`, {
+      headers: {
+        Authorization: `Token ${authHeader}`,
+      },
+    })
+    return res.data.articles.length
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios fetch article count by author request error:', error)
+      return Promise.reject('Failed to fetch article count by author')
+    }
+    console.error('Fetch article count by author error:', error)
     return Promise.reject(error)
   }
 }
