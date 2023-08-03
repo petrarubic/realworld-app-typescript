@@ -118,7 +118,7 @@ function ArticleCard({ article }: { article: Article }) {
             </span>
             <span className='text-base'>{article.author.username}</span>
           </p>
-          <p className='text-sm text-gray-600'>
+          <p className='text-sm text-gray-600 text-right'>
             {formatDateString(article.createdAt)}
           </p>
         </div>
@@ -132,7 +132,7 @@ function ArticleCard({ article }: { article: Article }) {
           {article.description}
         </CardDescription>
         {article.tagList && article.tagList?.length > 0 && (
-          <div className='space-x-2'>
+          <div className='space-x-2 line-clamp-1'>
             {article.tagList.map(
               (t, index) =>
                 t !== '' && (
