@@ -156,11 +156,15 @@ const ArticleForm = ({ mode, onSubmit, initialData }: ArticleFormProps) => {
                       )}
                       styles={customStyles}
                     />
+                    {errors?.tagList?.message && (
+                      <FormMessage className='mt-2'>
+                        {errors.tagList.message}
+                      </FormMessage>
+                    )}
                   </div>
                 )}
               />
             )}
-            {errors?.tagList?.message && <span>{errors.tagList.message}</span>}
             <FormField
               control={form.control}
               name='description'
