@@ -2,7 +2,6 @@ import { deleteComment } from '../../service/commentService'
 import { Comment } from '../../types/Comment'
 import { formatDateString } from '../../utils/utils'
 import { useEffect, useState } from 'react'
-import { fetchCurrentUser } from '../../service/authService'
 import { TrashIcon } from '@heroicons/react/24/outline'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import {

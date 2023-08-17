@@ -125,7 +125,7 @@ function ArticleCard({ article }: { article: Article }) {
         <Separator />
       </CardHeader>
       <CardContent className='space-y-4'>
-        <CardTitle className='line-clamp-1 pb-0.5 sm:line-clamp-2 sm:pb-1'>
+        <CardTitle className='line-clamp-1 pb-0.5 sm:line-clamp-2 sm:pb-0.5'>
           {article.title}
         </CardTitle>
         <CardDescription className='text-gray-700 line-clamp-3'>
