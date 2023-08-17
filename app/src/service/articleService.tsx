@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Article } from '../types/Article'
 import { ArticleFormData } from '../types/ArticleFormData'
+import { Author } from '@/types/Author'
 
 const baseUrl = 'https://api.realworld.io/api'
 
@@ -43,24 +44,121 @@ export const fetchArticles = async (
 
 // Retrieve article count by author
 export const fetchArticleCountByAuthor = async (
-  author: string
+  author: Author
 ): Promise<number> => {
   try {
     const token = localStorage.getItem('userToken')
     const authHeader = token?.replace(/^"(.*)"$/, '$1')
 
-    const res = await axios.get(`${baseUrl}/articles?author=${author}`, {
-      headers: {
-        Authorization: `Token ${authHeader}`,
-      },
-    })
-    return res.data.articles.length
+    const res = await axios.get(
+      `${baseUrl}/articles?author=${author.username}`,
+      {
+        headers: {
+          Authorization: `Token ${authHeader}`,
+        },
+      }
+    )
+    return res.data.articlesCount
   } catch (error) {
     if (axios.isAxiosError(error)) {
       console.error('Axios fetch article count by author request error:', error)
       return Promise.reject('Failed to fetch article count by author')
     }
     console.error('Fetch article count by author error:', error)
+    return Promise.reject(error)
+  }
+}
+
+// Retrieve total favorites count by author
+export const fetchFavoritesCountByAuthor = async (
+  author: Author
+): Promise<number> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+
+    const res = await axios.get(
+      `${baseUrl}/articles?author=${author.username}`,
+      {
+        headers: {
+          Authorization: `Token ${authHeader}`,
+        },
+      }
+    )
+
+    const totalFavoritesCount: number = res.data.articles.reduce(
+      (total: number, article: Article) => total + article.favoritesCount,
+      0
+    )
+
+    return totalFavoritesCount
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(
+        'Axios fetch favorites count by author request error:',
+        error
+      )
+      return Promise.reject('Failed to fetch favorites count by author')
+    }
+    console.error('Fetch favorites count by author error:', error)
+    return Promise.reject(error)
+  }
+}
+
+// Retrieve the list of followed authors
+export const fetchFollowedAuthors = async (): Promise<Author[]> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+
+    const res = await axios.get(`${baseUrl}/articles/feed`, {
+      headers: {
+        Authorization: `Token ${authHeader}`,
+      },
+    })
+
+    const followedAuthors: Author[] = []
+
+    res.data.articles.forEach((article: Article) => {
+      followedAuthors.push(article.author)
+    })
+
+    return followedAuthors
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios fetch followed authors request error:', error)
+      return Promise.reject('Failed to fetch followed authors')
+    }
+    console.error('Fetch followed authors error:', error)
+    return Promise.reject(error)
+  }
+}
+
+// Retrieve the count of followed authors
+export const fetchFollowedAuthorsCount = async (): Promise<number> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+
+    const res = await axios.get(`${baseUrl}/articles/feed`, {
+      headers: {
+        Authorization: `Token ${authHeader}`,
+      },
+    })
+
+    const followedAuthors = new Set<string>()
+
+    res.data.articles.forEach((article: Article) => {
+      followedAuthors.add(article.author.username)
+    })
+
+    return followedAuthors.size
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios fetch followed authors count request error:', error)
+      return Promise.reject('Failed to fetch followed authors count')
+    }
+    console.error('Fetch followed authors count error:', error)
     return Promise.reject(error)
   }
 }

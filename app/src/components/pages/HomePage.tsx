@@ -13,6 +13,7 @@ import { useQuery } from 'react-query'
 import { Article } from '@/types/Article'
 import { fetchArticles } from '@/service/articleService'
 import Spinner from '../shared/Spinner'
+import UserDataCard from '../shared/UserDataCard'
 
 function HomePage() {
   const currentUser = useUserData()
@@ -24,11 +25,11 @@ function HomePage() {
   return (
     <div className='bg-gray-100 py-5'>
       <SubNavbar />
-      <div className='grid grid-cols-3 gap-20 p-20'>
-        <div className='col-span-2 space-y-20'>
+      <div className='grid grid-col-1 sm:grid-cols-3 gap-20 p-5 sm:p-20'>
+        <div className='col-span-full sm:col-span-2 space-y-20'>
           <Card className='border-none rounded-2xl'>
-            <CardContent className='grid grid-cols-3 gap-4 pt-6 place-items-center'>
-              <div className='flex flex-col col-span-2 space-y-4'>
+            <CardContent className='grid grid-col-1 sm:grid-cols-3 gap-4 pt-6 place-items-center'>
+              <div className='flex flex-col col-span-full order-last sm:order-first sm:col-span-2 space-y-4'>
                 <CardTitle className='text-3xl'>
                   <span>Welcome </span>
                   <span className='font-bold'>{currentUser?.username}</span>
@@ -63,7 +64,7 @@ function HomePage() {
               </Button>
             </div>
             <Card className='bg-transparent border-none shadow-none'>
-              <CardContent className='grid grid-cols-3 gap-8'>
+              <CardContent className='grid grid-col-1 sm:grid-cols-3 gap-8'>
                 {isLoading && (
                   <div className='col-span-3 flex items-center justify-center'>
                     <Spinner />
@@ -86,9 +87,17 @@ function HomePage() {
             </Card>
           </div>
         </div>
-
         <Card className='border-none rounded-2xl'>
-          <CardContent></CardContent>
+          <CardContent>
+            <div className='flex flex-col space-y-8 py-10 px-4'>
+              <UserDataCard type='posted-articles' />
+              <UserDataCard type='article-likes' />
+              <UserDataCard type='followed-authors' />
+            </div>
+            <div className='pt-2'>
+              <p className='text-xl font-bold'>Followed authors</p>
+            </div>
+          </CardContent>
         </Card>
       </div>
     </div>
