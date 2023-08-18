@@ -55,7 +55,7 @@ function UserDataCard({ type }: { type: UserData }) {
   return (
     <Card className='w-full h-[80px] bg-gray-100 rounded-2xl border-gray-100'>
       <CardContent className='h-full flex space-x-10 items-center pt-6'>
-        <div className={`w-12 h-12 rounded-xl p-3 border-2 ${style}`}>
+        <div className={`w-12 h-12 rounded-xl p-2.5 border-2 ${style}`}>
           {icon}
         </div>
         <div>
