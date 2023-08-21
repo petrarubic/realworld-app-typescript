@@ -36,20 +36,26 @@ function UserDataCard({ type }: { type: UserData }) {
   const currentUser = useUserData()
   const { label, icon, style } = cardTypeConfig[type]
 
-  const { isLoading, isError, data, error } = useQuery<number, Error>({
+  const { isLoading, isError, data, error } = useQuery<
+    number | undefined,
+    Error
+  >({
     queryKey: [type, currentUser],
     queryFn: async () => {
       switch (type) {
         case 'posted-articles':
-          return currentUser ? fetchArticleCountByAuthor(currentUser) : 0
+          return currentUser
+            ? fetchArticleCountByAuthor(currentUser)
+            : undefined
         case 'article-likes':
-          return currentUser ? fetchFavoritesCountByAuthor(currentUser) : 0
+          return currentUser
+            ? fetchFavoritesCountByAuthor(currentUser)
+            : undefined
         case 'followed-authors':
           return fetchFollowedAuthorsCount()
-        default:
-          return 0
       }
     },
+    initialData: undefined,
   })
 
   return (
@@ -60,6 +66,9 @@ function UserDataCard({ type }: { type: UserData }) {
         </div>
         <div>
           <p className='text-sm'>{label}</p>
+          {data === undefined && !isLoading && !isError && (
+            <p className='text-xs'>No data available</p>
+          )}
           {isLoading && <p className='text-xs'>Loading...</p>}
           {isError && <p className='text-xs'>{error.message}</p>}
           {!isLoading && !isError && (
