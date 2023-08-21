@@ -25,11 +25,11 @@ function HomePage() {
   return (
     <div className='bg-gray-100 py-5'>
       <SubNavbar />
-      <div className='grid grid-col-1 sm:grid-cols-3 gap-20 p-5 sm:p-20'>
-        <div className='col-span-full sm:col-span-2 space-y-20'>
+      <div className='grid grid-col-1 lg:grid-cols-3 gap-10 xl:gap-20 p-5 md:p-28 lg:p-5 xl:p-20'>
+        <div className='col-span-full lg:col-span-2 space-y-20'>
           <Card className='border-none rounded-2xl'>
-            <CardContent className='grid grid-col-1 sm:grid-cols-3 gap-4 pt-6 place-items-center'>
-              <div className='flex flex-col col-span-full order-last sm:order-first sm:col-span-2 space-y-4'>
+            <CardContent className='grid grid-col-1 lg:grid-cols-3 gap-4 pt-6 place-items-center'>
+              <div className='flex flex-col col-span-full order-last lg:order-first lg:col-span-2 space-y-4'>
                 <CardTitle className='text-3xl'>
                   <span>Welcome </span>
                   <span className='font-bold'>{currentUser?.username}</span>
@@ -51,7 +51,7 @@ function HomePage() {
                   </Link>
                 </Button>
               </div>
-              <div>
+              <div className='w-2/3 lg:w-full'>
                 <img src='/dashboard-graphics.png' />
               </div>
             </CardContent>
@@ -64,7 +64,7 @@ function HomePage() {
               </Button>
             </div>
             <Card className='bg-transparent border-none shadow-none'>
-              <CardContent className='grid grid-col-1 sm:grid-cols-3 gap-8'>
+              <CardContent className='grid grid-col-1 lg:grid-cols-3 gap-8'>
                 {isLoading && (
                   <div className='col-span-3 flex items-center justify-center'>
                     <Spinner />
