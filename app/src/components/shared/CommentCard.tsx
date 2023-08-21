@@ -1,4 +1,3 @@
-import { deleteComment } from '../../service/commentService'
 import { Comment } from '../../types/Comment'
 import { formatDateString } from '../../utils/utils'
 import { useEffect, useState } from 'react'

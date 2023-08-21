@@ -3,7 +3,6 @@ import { Article } from '../../types/Article'
 import { formatDateString } from '../../utils/utils'
 import {
   addToFavoriteArticles,
-  deleteArticle,
   removeFromFavoriteArticles,
 } from '../../service/articleService'
 import { useEffect, useState } from 'react'
@@ -44,10 +43,18 @@ import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
 import { useQueryClient } from 'react-query'
+import Spinner from './Spinner'
 
-function ArticleCard({ article }: { article: Article }) {
+function ArticleCard({
+  article,
+  onDelete,
+}: {
+  article: Article
+  onDelete: (slug: string) => void
+}) {
   const [favoriteArticle, setFavoriteArticle] = useState(article)
   const [showActionButtons, setShowActionButtons] = useState(false)
+  const [isDeleting, setIsDeleting] = useState(false)
   const queryClient = useQueryClient()
 
   const handleAddToFavorites = async () => {
@@ -78,13 +85,9 @@ function ArticleCard({ article }: { article: Article }) {
     }
   }
 
-  const handleDelete = async () => {
-    try {
-      await deleteArticle(article.slug)
-      window.location.reload()
-    } catch (error) {
-      console.error('Error with deleting selected article', error)
-    }
+  const handleDelete = () => {
+    onDelete(article.slug)
+    setIsDeleting(true)
   }
 
   useEffect(() => {
@@ -107,6 +110,14 @@ function ArticleCard({ article }: { article: Article }) {
 
     fetchUserData()
   }, [article.author.username])
+
+  if (isDeleting) {
+    return (
+      <div className='flex justify-center items-center'>
+        <Spinner />
+      </div>
+    )
+  }
 
   return (
     <Card className='rounded-lg max-h-[340px]'>
