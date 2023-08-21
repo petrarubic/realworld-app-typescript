@@ -74,8 +74,8 @@ function ArticleDetailsPage() {
 
     const handleFollowUser = async () => {
       try {
-        const updatedAuthor = await followUser(data.author)
-        setIsAuthorFollowed(updatedAuthor.following)
+        setIsAuthorFollowed(true)
+        await followUser(data.author)
       } catch (error) {
         console.error('Error with following the selected article author', error)
       }
@@ -83,8 +83,8 @@ function ArticleDetailsPage() {
 
     const handleUnfollowUser = async () => {
       try {
-        const updatedAuthor = await unfollowUser(data.author)
-        setIsAuthorFollowed(updatedAuthor.following)
+        setIsAuthorFollowed(false)
+        await unfollowUser(data.author)
       } catch (error) {
         console.error(
           'Error with unfollowing the selected article author',

@@ -43,15 +43,22 @@ import {
 import { Badge } from '@/components/ui/badge'
 import { Separator } from '@/components/ui/separator'
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar'
+import { useQueryClient } from 'react-query'
 
 function ArticleCard({ article }: { article: Article }) {
   const [favoriteArticle, setFavoriteArticle] = useState(article)
   const [showActionButtons, setShowActionButtons] = useState(false)
+  const queryClient = useQueryClient()
 
   const handleAddToFavorites = async () => {
     try {
-      const updatedArticle = await addToFavoriteArticles(article.slug)
-      setFavoriteArticle(updatedArticle)
+      setFavoriteArticle((prevArticle) => ({
+        ...prevArticle,
+        favorited: true,
+        favoritesCount: prevArticle.favoritesCount + 1,
+      }))
+      await addToFavoriteArticles(article.slug)
+      queryClient.invalidateQueries('articles-recent')
     } catch (error) {
       console.error('Error with adding selected article to favorites', error)
     }
@@ -59,8 +66,13 @@ function ArticleCard({ article }: { article: Article }) {
 
   const handleRemoveFromFavorites = async () => {
     try {
-      const updatedArticle = await removeFromFavoriteArticles(article.slug)
-      setFavoriteArticle(updatedArticle)
+      setFavoriteArticle((prevArticle) => ({
+        ...prevArticle,
+        favorited: false,
+        favoritesCount: prevArticle.favoritesCount - 1,
+      }))
+      await removeFromFavoriteArticles(article.slug)
+      queryClient.invalidateQueries('articles-recent')
     } catch (error) {
       console.error('Error with adding selected article to favorites', error)
     }
