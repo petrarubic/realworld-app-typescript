@@ -1,7 +1,11 @@
 import { useEffect, useState } from 'react'
 import { CommentFormData } from '../../types/CommentFormData'
 import CommentForm from '../forms/CommentForm'
-import { addComment, fetchComments } from '../../service/commentService'
+import {
+  addComment,
+  deleteComment,
+  fetchComments,
+} from '../../service/commentService'
 import { useQuery } from 'react-query'
 import { Comment } from '../../types/Comment'
 import CommentCard from './CommentCard'
@@ -27,6 +31,16 @@ function ArticleCommentSection() {
     queryFn: () => fetchComments(slug),
   })
 
+  const handleDeleteComment = (commentId: number) => {
+    deleteComment(slug, commentId)
+      .then(() => {
+        refetch()
+      })
+      .catch((error) => {
+        console.error('Error deleting comment:', error)
+      })
+  }
+
   useEffect(() => {
     if (isCommentAdded) {
       refetch()
@@ -45,7 +59,11 @@ function ArticleCommentSection() {
       <br />
       <div className='flex flex-col space-y-4 mt-10'>
         {data?.map((comment) => (
-          <CommentCard comment={comment} key={comment.id} slug={slug} />
+          <CommentCard
+            comment={comment}
+            key={comment.id}
+            onDelete={handleDeleteComment}
+          />
         ))}
       </div>
     </div>

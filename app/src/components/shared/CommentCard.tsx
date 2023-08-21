@@ -26,21 +26,16 @@ import { useUserData } from '@/auth'
 
 function CommentCard({
   comment,
-  slug,
+  onDelete,
 }: {
   comment: Comment
-  slug: string | undefined
+  onDelete: (commentId: number) => void
 }) {
   const currentUser = useUserData()
   const [showDeleteButton, setShowDeleteButton] = useState(false)
 
-  const handleDelete = async () => {
-    try {
-      await deleteComment(slug, comment.id)
-      window.location.reload()
-    } catch (error) {
-      console.error('Error with deleting selected comment', error)
-    }
+  const handleDelete = () => {
+    onDelete(comment.id)
   }
 
   useEffect(() => {

@@ -53,7 +53,7 @@ function ArticleDetailsPage() {
     setIsAuthorFollowed(data?.author.following)
   }, [currentUser, data?.author])
 
-  if (isLoading) {
+  if (isLoading || !currentUser) {
     return (
       <div className='flex justify-center items-center bg-gray-100 h-full'>
         <Spinner />
