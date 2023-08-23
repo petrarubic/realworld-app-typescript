@@ -111,24 +111,33 @@ export const fetchFollowedAuthors = async (): Promise<Author[]> => {
     const token = localStorage.getItem('userToken')
     const authHeader = token?.replace(/^"(.*)"$/, '$1')
 
-    const res = await axios.get(`${baseUrl}/articles/feed`, {
-      headers: {
-        Authorization: `Token ${authHeader}`,
-      },
-    })
-
     const followedAuthors: Author[] = []
+    let currentPage = 1
+    let hasNextPage = true
 
-    res.data.articles.forEach((article: Article) => {
-      followedAuthors.push(article.author)
-    })
+    while (hasNextPage) {
+      const res = await axios.get(`${baseUrl}/articles/feed`, {
+        params: {
+          limit: 20,
+          offset: (currentPage - 1) * 20,
+        },
+        headers: {
+          Authorization: `Token ${authHeader}`,
+        },
+      })
+
+      if (res.data.articles.length === 0) {
+        hasNextPage = false
+      } else {
+        res.data.articles.forEach((article: Article) => {
+          followedAuthors.push(article.author)
+        })
+        currentPage++
+      }
+    }
 
     return followedAuthors
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      console.error('Axios fetch followed authors request error:', error)
-      return Promise.reject('Failed to fetch followed authors')
-    }
     console.error('Fetch followed authors error:', error)
     return Promise.reject(error)
   }
