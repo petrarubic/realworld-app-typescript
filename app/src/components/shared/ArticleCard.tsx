@@ -114,7 +114,11 @@ function ArticleCard({
   if (isDeleting) {
     return (
       <div className='flex justify-center items-center'>
-        <Spinner />
+        <Spinner
+          fillBackground='fill-indigo-200'
+          fillForeground='fill-indigo-600'
+          dimensions='w-12 h-12'
+        />
       </div>
     )
   }

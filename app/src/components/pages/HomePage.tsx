@@ -68,7 +68,11 @@ function HomePage() {
               <CardContent className='grid grid-col-1 lg:grid-cols-3 gap-8'>
                 {isLoading && (
                   <div className='col-span-3 flex items-center justify-center'>
-                    <Spinner />
+                    <Spinner
+                      fillBackground='fill-indigo-200'
+                      fillForeground='fill-indigo-600'
+                      dimensions='w-12 h-12'
+                    />
                   </div>
                 )}
                 {isError && (

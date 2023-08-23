@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useQuery } from 'react-query'
-import { fetchFollowedArticles } from '../../service/articleService'
+import {
+  deleteArticle,
+  fetchFollowedArticles,
+} from '../../service/articleService'
 import { Article } from '../../types/Article'
 import ArticleCard from '../shared/ArticleCard'
 import Spinner from '../shared/Spinner'
@@ -11,10 +14,23 @@ function ArticlesFollowingPage() {
   const [currentPage, setCurrentPage] = useState(1)
   const limit = 9
 
-  const { isLoading, isError, data, error } = useQuery<Article[], Error>({
+  const { isLoading, isError, data, error, refetch } = useQuery<
+    Article[],
+    Error
+  >({
     queryKey: ['articles-following', currentPage],
     queryFn: () => fetchFollowedArticles(limit, (currentPage - 1) * limit),
   })
+
+  const handleDeleteArticle = (slug: string) => {
+    deleteArticle(slug)
+      .then(() => {
+        refetch()
+      })
+      .catch((error) => {
+        console.error('Error deleting article:', error)
+      })
+  }
 
   const hasMorePages = data?.length === limit
   const totalPages = hasMorePages ? currentPage + 1 : currentPage
@@ -22,7 +38,11 @@ function ArticlesFollowingPage() {
   if (isLoading) {
     return (
       <div className='flex justify-center items-center bg-gray-100 h-full'>
-        <Spinner />
+        <Spinner
+          fillBackground='fill-indigo-200'
+          fillForeground='fill-indigo-600'
+          dimensions='w-12 h-12'
+        />
       </div>
     )
   }
@@ -55,7 +75,11 @@ function ArticlesFollowingPage() {
       <SubNavbar />
       <div className='grid grid-cols-1 gap-x-6 gap-y-8 lg:grid-cols-3 xl:gap-x-8 px-10 py-10'>
         {data?.map((article) => (
-          <ArticleCard article={article} key={article.slug} />
+          <ArticleCard
+            article={article}
+            key={article.slug}
+            onDelete={handleDeleteArticle}
+          />
         ))}
       </div>
       <Pagination

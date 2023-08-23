@@ -35,7 +35,11 @@ function ArticlesRecentPage() {
   if (isLoading) {
     return (
       <div className='flex justify-center items-center bg-gray-100 h-full'>
-        <Spinner />
+        <Spinner
+          fillBackground='fill-indigo-200'
+          fillForeground='fill-indigo-600'
+          dimensions='w-12 h-12'
+        />
       </div>
     )
   }

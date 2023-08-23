@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 
 function FollowedAuthorsList() {
   const [followedAuthors, setFollowedAuthors] = useState<Author[]>([])
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     async function fetchData() {
@@ -33,20 +34,27 @@ function FollowedAuthorsList() {
         )
 
         setFollowedAuthors(uniqueAuthors)
+        setIsLoading(false)
       } catch (error) {
         console.error('Error fetching followed authors:', error)
+        setIsLoading(false)
       }
     }
 
     fetchData()
   }, [])
+
+  if (isLoading) {
+    return <div className='flex justify-center items-center'>Loading...</div>
+  }
+
   return (
     <div className='flex space-x-4 overflow-x-scroll hide-scrollbar py-4'>
       {followedAuthors.map((author) => (
-        <TooltipProvider>
+        <TooltipProvider key={author.username}>
           <Tooltip>
             <TooltipTrigger>
-              <Avatar key={author.username} className='w-20 h-20'>
+              <Avatar className='w-20 h-20'>
                 <AvatarImage
                   src={
                     author.image &&
