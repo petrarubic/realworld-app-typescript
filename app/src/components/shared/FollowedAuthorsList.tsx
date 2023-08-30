@@ -8,6 +8,7 @@ import {
 import { fetchFollowedAuthors } from '@/service/articleService'
 import { Author } from '@/types/Author'
 import { useEffect, useState } from 'react'
+import Spinner from './Spinner'
 
 function FollowedAuthorsList() {
   const [followedAuthors, setFollowedAuthors] = useState<Author[]>([])
@@ -45,7 +46,15 @@ function FollowedAuthorsList() {
   }, [])
 
   if (isLoading) {
-    return <div className='flex justify-center items-center'>Loading...</div>
+    return (
+      <div className='flex justify-center items-center mt-5'>
+        <Spinner
+          fillBackground='fill-gray-200'
+          fillForeground='fill-gray-600'
+          dimensions='w-10 h-10'
+        />
+      </div>
+    )
   }
 
   return (

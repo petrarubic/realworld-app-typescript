@@ -11,6 +11,7 @@ import {
   HandThumbUpIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
+import Spinner from './Spinner'
 
 type UserData = 'posted-articles' | 'article-likes' | 'followed-authors'
 
@@ -69,7 +70,15 @@ function UserDataCard({ type }: { type: UserData }) {
           {data === undefined && !isLoading && !isError && (
             <p className='text-xs'>No data available</p>
           )}
-          {isLoading && <p className='text-xs'>Loading...</p>}
+          {isLoading && (
+            <div className='pt-2'>
+              <Spinner
+                fillBackground='fill-indigo-200'
+                fillForeground='fill-indigo-600'
+                dimensions='w-5 h-5'
+              />
+            </div>
+          )}
           {isError && <p className='text-xs'>{error.message}</p>}
           {!isLoading && !isError && (
             <p className='text-xl font-extrabold'>{data}</p>
