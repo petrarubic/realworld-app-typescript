@@ -15,6 +15,7 @@ import { fetchArticles } from '@/service/articleService'
 import Spinner from '../shared/Spinner'
 import UserDataCard from '../shared/UserDataCard'
 import FollowedAuthorsList from '../shared/FollowedAuthorsList'
+import FavoriteTagsList from '../shared/FavoriteTagsList'
 
 function HomePage() {
   const currentUser = useUserData()
@@ -99,14 +100,23 @@ function HomePage() {
               <UserDataCard type='article-likes' />
               <UserDataCard type='followed-authors' />
             </div>
-            <div className='pt-2 pb-8'>
+            <div className='py-2'>
               <div className='flex justify-between items-center'>
                 <p className='text-xl font-bold'>Followed authors</p>
                 <Button asChild variant='link'>
-                  <Link to={`/articles/following`}>View All</Link>
+                  <Link to={`/articles/following`}>View Articles</Link>
                 </Button>
               </div>
               <FollowedAuthorsList />
+            </div>
+            <div className='py-2'>
+              <div className='flex justify-between items-center'>
+                <p className='text-xl font-bold'>Favorite tags</p>
+                <Button asChild variant='link'>
+                  <Link to={`/articles/favorite`}>View Articles</Link>
+                </Button>
+              </div>
+              <FavoriteTagsList />
             </div>
           </CardContent>
         </Card>
