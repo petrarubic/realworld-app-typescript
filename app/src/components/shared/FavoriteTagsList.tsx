@@ -3,6 +3,12 @@ import { Badge } from '@/components/ui/badge'
 import { fetchFavoriteTags } from '@/service/tagsService'
 import { useEffect, useState } from 'react'
 import Spinner from './Spinner'
+import { generateHashCode, intToRGB } from '@/utils/utils'
+
+function getColorForTag(tag: string) {
+  const colorCode = intToRGB(generateHashCode(tag))
+  return colorCode
+}
 
 function FavoriteTagsList() {
   const [favoriteTags, setFavoriteTags] = useState<string[]>([])
@@ -46,6 +52,7 @@ function FavoriteTagsList() {
               variant='secondary'
               key={index}
               className='h-6 mb-2 whitespace-nowrap'
+              style={{ backgroundColor: getColorForTag(t) }}
             >
               {t}
             </Badge>
