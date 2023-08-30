@@ -15,6 +15,7 @@ import ArticlesRecentPage from './components/pages/ArticlesRecentPage'
 import ArticlesFollowingPage from './components/pages/ArticlesFollowingPage'
 import PrivateRoute from './components/auth/PrivateRoute'
 import HomePage from './components/pages/HomePage'
+import ArticlesFavoritePage from './components/pages/ArticlesFavoritePage'
 
 const queryClient = new QueryClient()
 
@@ -45,6 +46,16 @@ const router = createBrowserRouter([
       <MainLayout>
         <PrivateRoute>
           <ArticlesFollowingPage />
+        </PrivateRoute>
+      </MainLayout>
+    ),
+  },
+  {
+    path: '/articles/favorite',
+    element: (
+      <MainLayout>
+        <PrivateRoute>
+          <ArticlesFavoritePage />
         </PrivateRoute>
       </MainLayout>
     ),

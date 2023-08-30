@@ -199,6 +199,34 @@ export const fetchFollowedArticles = async (
   }
 }
 
+// Retrieve a list of favorite articles
+export const fetchFavoriteArticles = async (
+  limit: number,
+  offset: number,
+  currentUser: string | undefined
+): Promise<Article[]> => {
+  try {
+    const token = localStorage.getItem('userToken')
+    const authHeader = token?.replace(/^"(.*)"$/, '$1')
+    const res = await axios.get(
+      `${baseUrl}/articles?favorited=${currentUser}&limit=${limit}&offset=${offset}`,
+      {
+        headers: {
+          Authorization: `Token ${authHeader}`,
+        },
+      }
+    )
+    return res.data.articles
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios fetch favorite articles request error:', error)
+      return Promise.reject('Failed to fetch favorite articles')
+    }
+    console.error('Fetch favorite articles error:', error)
+    return Promise.reject(error)
+  }
+}
+
 // Retrieve single article details
 export const fetchArticle = async (
   slug: string | undefined
