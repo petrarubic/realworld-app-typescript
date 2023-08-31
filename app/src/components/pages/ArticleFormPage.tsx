@@ -1,5 +1,5 @@
 import { useQuery } from 'react-query'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 import ArticleForm from '../forms/ArticleForm'
 import { ArticleFormData } from '../../types/ArticleFormData'
 import { Article } from '../../types/Article'
@@ -10,10 +10,13 @@ import {
 } from '../../service/articleService'
 import Spinner from '../shared/Spinner'
 import { useToast } from '@/components/ui/use-toast'
+import { Button } from '@/components/ui/button'
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
 
 function ArticleFormPage() {
   const { slug } = useParams()
   const { toast } = useToast()
+  const navigate = useNavigate()
 
   const { isLoading, isError, data, error } = useQuery<Article, Error>({
     queryKey: ['article', slug],
@@ -78,12 +81,28 @@ function ArticleFormPage() {
   }
 
   return (
-    <div className='flex flex-col min-h-full justify-center items-center px-6 py-12 lg:px-8 bg-gray-100'>
-      {slug ? (
-        <ArticleForm mode='edit' onSubmit={handleEditForm} initialData={data} />
-      ) : (
-        <ArticleForm mode='create' onSubmit={handleCreateForm} />
-      )}
+    <div className='bg-gray-100'>
+      <Button
+        variant='link'
+        onClick={() => navigate(-1)}
+        className='w-[250px] m-4'
+      >
+        <p className='flex flex-row space-x-2 items-center'>
+          <ArrowLeftIcon className='w-4 h-4' />
+          <span>Go Back</span>
+        </p>
+      </Button>
+      <div className='flex flex-col min-h-full justify-center items-center px-6 py-12 lg:px-8 '>
+        {slug ? (
+          <ArticleForm
+            mode='edit'
+            onSubmit={handleEditForm}
+            initialData={data}
+          />
+        ) : (
+          <ArticleForm mode='create' onSubmit={handleCreateForm} />
+        )}
+      </div>
     </div>
   )
 }

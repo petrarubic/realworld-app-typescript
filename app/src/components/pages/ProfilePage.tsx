@@ -6,9 +6,13 @@ import { fetchCurrentUser } from '../../service/authService'
 import Spinner from '../shared/Spinner'
 import { editProfile } from '../../service/profileService'
 import { useToast } from '@/components/ui/use-toast'
+import { Button } from '@/components/ui/button'
+import { ArrowLeftIcon } from '@heroicons/react/24/outline'
+import { useNavigate } from 'react-router'
 
 function ProfilePage() {
   const { toast } = useToast()
+  const navigate = useNavigate()
 
   const { isLoading, isError, data, error } = useQuery<User, Error>({
     queryKey: ['profile'],
@@ -54,8 +58,20 @@ function ProfilePage() {
   }
 
   return (
-    <div className='flex flex-col min-h-full justify-center items-center px-6 py-12 lg:px-8 bg-gray-100'>
-      <ProfileForm initialData={data} onSubmit={handleEditForm} />
+    <div className='bg-gray-100'>
+      <Button
+        variant='link'
+        onClick={() => navigate(-1)}
+        className='w-[250px] m-4'
+      >
+        <p className='flex flex-row space-x-2 items-center'>
+          <ArrowLeftIcon className='w-4 h-4' />
+          <span>Go Back</span>
+        </p>
+      </Button>
+      <div className='flex flex-col min-h-full justify-center items-center px-6 py-12 lg:px-8 '>
+        <ProfileForm initialData={data} onSubmit={handleEditForm} />
+      </div>
     </div>
   )
 }

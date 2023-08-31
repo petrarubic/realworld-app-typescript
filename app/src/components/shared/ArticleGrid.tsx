@@ -36,7 +36,7 @@ function ArticleGrid({ queryKey, fetchFn }: ArticleGridProps) {
   const hasMorePages = data?.length === limit
   const totalPages = hasMorePages ? currentPage + 1 : currentPage
 
-  if (isLoading) {
+  if (isLoading || !data || data.length < 1) {
     return (
       <div className='flex justify-center items-center bg-gray-100 h-full'>
         <Spinner
