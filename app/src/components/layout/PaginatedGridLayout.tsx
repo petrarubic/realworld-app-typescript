@@ -16,14 +16,14 @@ function PaginatedGridLayout({
   setCurrentPage,
 }: PaginatedGridLayoutProps) {
   return (
-    <div className='bg-gray-100 py-5'>
+    <>
       <GridLayout>{children}</GridLayout>
       <Pagination
         currentPage={currentPage}
         setCurrentPage={setCurrentPage}
         totalPages={totalPages}
       />
-    </div>
+    </>
   )
 }
 

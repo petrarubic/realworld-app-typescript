@@ -24,7 +24,7 @@ function Pagination({
     }
   }
   return (
-    <div className='flex justify-center mt-5'>
+    <div className='bg-gray-100 flex justify-center pt-5 pb-10'>
       <Button
         className='w-28 bg-indigo-600 hover:bg-indigo-900 disabled:bg-gray-400'
         onClick={handlePrevClick}

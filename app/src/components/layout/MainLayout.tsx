@@ -8,7 +8,7 @@ const MainLayout = ({ children }: MainLayoutProps) => {
   return (
     <>
       <Navbar />
-      {children}
+      <div className='bg-gray-100 h-full'>{children}</div>
     </>
   )
 }
