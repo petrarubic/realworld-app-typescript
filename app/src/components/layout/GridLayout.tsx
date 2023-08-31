@@ -1,4 +1,4 @@
-import SubNavbar from '../shared/SubNavbar'
+import SubNavbar from '../navigation/SubNavbar'
 
 type GridLayoutProps = {
   children: JSX.Element

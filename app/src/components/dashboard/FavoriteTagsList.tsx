@@ -2,7 +2,7 @@ import { useUserData } from '@/auth'
 import { Badge } from '@/components/ui/badge'
 import { fetchFavoriteTags } from '@/service/tagsService'
 import { useEffect, useState } from 'react'
-import Spinner from './Spinner'
+import Spinner from '../shared/Spinner'
 import { generateHashCode, intToRGB } from '@/utils/utils'
 
 function getColorForTag(tag: string) {

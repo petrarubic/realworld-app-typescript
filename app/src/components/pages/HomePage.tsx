@@ -1,5 +1,5 @@
 import { useUserData } from '@/auth'
-import SubNavbar from '../shared/SubNavbar'
+import SubNavbar from '../navigation/SubNavbar'
 import {
   Card,
   CardContent,
@@ -13,9 +13,9 @@ import { useQuery } from 'react-query'
 import { Article } from '@/types/Article'
 import { fetchArticles } from '@/service/articleService'
 import Spinner from '../shared/Spinner'
-import UserDataCard from '../shared/UserDataCard'
-import FollowedAuthorsList from '../shared/FollowedAuthorsList'
-import FavoriteTagsList from '../shared/FavoriteTagsList'
+import UserDataCard from '../dashboard/UserDataCard'
+import FollowedAuthorsList from '../dashboard/FollowedAuthorsList'
+import FavoriteTagsList from '../dashboard/FavoriteTagsList'
 
 function HomePage() {
   const currentUser = useUserData()

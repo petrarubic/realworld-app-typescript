@@ -11,7 +11,7 @@ import {
   HandThumbUpIcon,
   UserGroupIcon,
 } from '@heroicons/react/24/outline'
-import Spinner from './Spinner'
+import Spinner from '../shared/Spinner'
 
 type UserData = 'posted-articles' | 'article-likes' | 'followed-authors'
 

@@ -8,7 +8,7 @@ import {
 import { fetchFollowedAuthors } from '@/service/articleService'
 import { Author } from '@/types/Author'
 import { useEffect, useState } from 'react'
-import Spinner from './Spinner'
+import Spinner from '../shared/Spinner'
 
 function FollowedAuthorsList() {
   const [followedAuthors, setFollowedAuthors] = useState<Author[]>([])

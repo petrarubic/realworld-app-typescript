@@ -1,4 +1,4 @@
-import Navbar from '../shared/Navbar'
+import Navbar from '../navigation/Navbar'
 
 type MainLayoutProps = {
   children: JSX.Element

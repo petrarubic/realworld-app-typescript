@@ -5,7 +5,7 @@ import {
   GlobeAmericasIcon,
 } from '@heroicons/react/24/outline'
 import { Link, useLocation } from 'react-router-dom'
-import ProfileDropdown from './ProfileDropdown'
+import ProfileDropdown from '../shared/ProfileDropdown'
 import { useEffect, useState } from 'react'
 
 function Navbar() {
