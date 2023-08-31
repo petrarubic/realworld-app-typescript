@@ -85,10 +85,10 @@ function ArticleFormPage() {
       <Button
         variant='link'
         onClick={() => navigate(-1)}
-        className='w-[250px] m-4'
+        className='w-[250px] m-4 text-md font-semibold'
       >
         <p className='flex flex-row space-x-2 items-center'>
-          <ArrowLeftIcon className='w-4 h-4' />
+          <ArrowLeftIcon className='w-5 h-5' />
           <span>Go Back</span>
         </p>
       </Button>

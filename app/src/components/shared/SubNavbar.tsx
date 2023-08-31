@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button'
 function SubNavbar() {
   return (
     <>
-      <div className='flex justify-end px-6 items-center pb-4'>
+      <div className='flex justify-end px-6 items-center py-4'>
         <Button asChild className='w-30 bg-indigo-600 hover:bg-indigo-900'>
           <Link to={`/articles/new`}>
             <p className='flex items-center space-x-2'>

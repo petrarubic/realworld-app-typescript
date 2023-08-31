@@ -31,7 +31,7 @@ function FavoriteTagsList() {
     fetchData()
   })
 
-  if (isLoading) {
+  if (isLoading || favoriteTags.length < 1) {
     return (
       <div className='flex justify-center items-center mt-5'>
         <Spinner
