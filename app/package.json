@@ -4,10 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "dev": "nx exec -- vite",
+    "build": "nx exec -- npm run _build -- ",
+    "lint": "nx exec -- eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview",
+    "_build": "tsc && vite build"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.15",
@@ -49,6 +50,11 @@
     "postcss": "^8.4.24",
     "tailwindcss": "^3.3.2",
     "typescript": "^5.0.2",
-    "vite": "^4.3.9"
+    "vite": "^4.3.9",
+    "nx": "16.7.4",
+    "nx-cloud": "latest"
+  },
+  "nx": {
+    "targets": {}
   }
 }
